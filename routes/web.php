@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NilaiController;
+use App\Http\Controllers\TingkatanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::controller(AuthController::class)->group(function () {
+Route::middleware('guest')->controller(AuthController::class)->group(function () {
     Route::get('register', 'register')->name('register');
     Route::post('register', 'registerSave')->name('register.save');
 
@@ -36,7 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/nilai/create', [NilaiController::class, 'create'])->name('nilai.create');
     Route::post('/nilai/import', [NilaiController::class, 'import'])->name('nilai.import');
     Route::post('/nilai/store', [NilaiController::class, 'store'])->name('nilai.store');
-
+    Route::get('/tingkatan', [TingkatanController::class, 'index']);
+    Route::get('/kelas', [TingkatanController::class, 'kelas']);
 
     Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
 });
