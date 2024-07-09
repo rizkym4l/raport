@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NilaiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,11 @@ Route::middleware('auth')->group(function () {
     Route::get('dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get('/nilai/create', [NilaiController::class, 'create'])->name('nilai.create');
+
+    Route::post('/nilai/store', [NilaiController::class, 'store'])->name('nilai.store');
+
 
     Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
 });
