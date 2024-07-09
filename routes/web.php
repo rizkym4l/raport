@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
 
     Route::get('/nilai/create', [NilaiController::class, 'create'])->name('nilai.create');
-
+    Route::post('/nilai/import', [NilaiController::class, 'import'])->name('nilai.import');
     Route::post('/nilai/store', [NilaiController::class, 'store'])->name('nilai.store');
 
 

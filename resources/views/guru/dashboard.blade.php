@@ -5,6 +5,14 @@
 @section('contents')
     <div class="container mx-auto py-8">
         <h2 class="text-2xl font-semibold mb-6">Input Nilai Siswa</h2>
+        <form action="{{ route('nilai.import') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input type="file" name="file" required>
+            <button type="submit">Import</button>
+        </form>
+
+        
+
 
         @if (session('success'))
             <div class="bg-green-100 text-green-700 p-4 rounded mb-6">
