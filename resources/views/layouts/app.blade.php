@@ -10,6 +10,30 @@
     <title>@yield('title', 'Dashboard')</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     @vite('resources/css/app.css')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function updateTime() {
+                var now = new Date();
+                var days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus',
+                    'September', 'Oktober', 'November', 'Desember'
+                ];
+                var day = days[now.getDay()];
+                var date = now.getDate();
+                var month = months[now.getMonth()];
+                var year = now.getFullYear();
+                var hours = now.getHours().toString().padStart(2, '0');
+                var minutes = now.getMinutes().toString().padStart(2, '0');
+                var seconds = now.getSeconds().toString().padStart(2, '0');
+                var formattedTime = day + ', ' + date + ' ' + month + ' ' + year + ' ' + hours + ':' + minutes +
+                    ':' + seconds;
+                document.getElementById('current-time').textContent = formattedTime;
+            }
+
+            setInterval(updateTime, 1000);
+            updateTime();
+        });
+    </script>
 </head>
 
 <body class="bg-slate-100 h-max font-[Poppins]">
@@ -23,12 +47,15 @@
                     <span class="ml-2 text-lg font-semibold text-gray-700">Eraport</span>
                 </div>
                 <div class="flex items-center space-x-4 ">
-                    <span class="text-gray-600 hidden sm:block">Jumat, 05 Juli 2024</span>
-                    <div class="relative">
-                        <button class="flex items-center focus:outline-none">
-                            <img src="https://via.placeholder.com/40" alt="Profile" class="rounded-full h-10 w-10">
-                        </button>
-                    </div>
+                    <span id="current-time" class="text-gray-600 hidden sm:block"></span>
+                    @auth
+                        <div class="relative">
+                            <button class="flex items-center focus:outline-none">
+                                <img src="{{ Auth::user()->photo ? asset('storage/' . Auth::user()->photo) : 'https://via.placeholder.com/40' }}"
+                                    alt="Profile" class="rounded-full h-10 w-10">
+                            </button>
+                        </div>
+                    @endauth
                 </div>
             </nav>
 
