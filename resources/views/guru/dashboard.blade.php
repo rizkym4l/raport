@@ -7,8 +7,12 @@
         <h2 class="text-2xl font-semibold mb-6">Input Nilai Siswa</h2>
         <form action="{{ route('nilai.import') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <input type="file" name="file" required>
-            <button type="submit">Import</button>
+            <div class="relative inline-block">
+                <input class=" 
+                file:bg-white file:text-gray-500 file:border-0
+                file:shadow-xl  block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none " id="file_input" name="file" type="file">
+            </div>
+            <button class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-1.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="submit">Import</button>
         </form>
 
         
