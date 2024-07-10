@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\NilaiExport;
 use Illuminate\Http\Request;
 use App\Models\Nilai;
 use App\Models\Mapel;
 use App\Models\Siswa;
 use App\Models\TahunAjaran;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\NilaiImport;
 
 class NilaiController extends Controller
 {
@@ -43,5 +46,21 @@ class NilaiController extends Controller
         $nilai->save();
 
         return redirect()->route('nilai.create')->with('success', 'Nilai berhasil disimpan');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xls,xlsx',
+        ]);
+        
+        Excel::import(new NilaiImport, $request->file('file'));
+
+        return redirect()->back()->with('success', 'Data berhasil diimpor!');
+    }
+
+    public function export()
+    {
+        return Excel::download(new NilaiExport, 'NilaiTemplate.xlsx');
     }
 }

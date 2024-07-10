@@ -9,15 +9,17 @@ class Nilai extends Model
 {
     use HasFactory;
 
+    protected $table = 'nilai'; // Menentukan nama tabel
+
     protected $fillable = [
-        'siswa_id',
-        'mapel_id',
-        'tahun_ajaran_id',
         'nama',
-        'nilai',
         'keterangan',
         'tingkat',
         'semester',
+        'nilai',
+        'mapel_id',
+        'tahun_ajaran_id',
+        'siswa_id',
     ];
 
     public function siswa()
