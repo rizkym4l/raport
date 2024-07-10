@@ -17,18 +17,31 @@ class NilaiImport implements ToArray
      */
     public function array(array $rows)
     {
+        if ($rows[0] === 'Nama') {
+            // Jika baris adalah judul, lewati dan jangan membuat model
+            return null;
+        }
+
         foreach ($rows as $row) {
 
             $siswa = Siswa::where('nama_lengkap', $row[0])->first();
             
             // Cari mapel berdasarkan id atau kriteria lain
             $mapel = Mapel::where('nama', $row[5])->first();
+            if (!$mapel) {
+                // Jika mapel tidak ditemukan, lewati baris ini
+                continue;
+            }
             
             // Cari tahun ajaran berdasarkan id atau kriteria lain
             $tahunAjaran = TahunAjaran::where('tahun', $row[6])->first();
+            if (!$tahunAjaran) {
+                // Jika tahun ajaran tidak ditemukan, lewati baris ini
+                continue;
+            }
 
             Nilai::create([
-                'nama' => $row[0], 
+                'nama' => $siswa->nama_lengkap, 
                 'keterangan' => $row[1], 
                 'tingkat' => $row[2], 
                 'semester' => $row[3], 

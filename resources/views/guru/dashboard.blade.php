@@ -4,7 +4,8 @@
 
 @section('contents')
     <div class="container mx-auto py-8">
-        <h2 class="text-2xl font-semibold mb-6">Input Nilai Siswa</h2>
+        <h2 class="text-2xl font-semibold">Input Nilai Siswa</h2>
+        <p class="mb-6">Silahkan Unduh Template <a href="{{ route('nilai.export') }}"><u>Di Sini</u></a></p>
         <form action="{{ route('nilai.import') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="relative inline-block">

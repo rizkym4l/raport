@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\NilaiExport;
 use Illuminate\Http\Request;
 use App\Models\Nilai;
 use App\Models\Mapel;
@@ -56,5 +57,10 @@ class NilaiController extends Controller
         Excel::import(new NilaiImport, $request->file('file'));
 
         return redirect()->back()->with('success', 'Data berhasil diimpor!');
+    }
+
+    public function export()
+    {
+        return Excel::download(new NilaiExport, 'NilaiTemplate.xlsx');
     }
 }
