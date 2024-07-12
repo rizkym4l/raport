@@ -18,7 +18,8 @@ class NilaiExport implements WithHeadings, ShouldAutoSize
     public function headings(): array
     {
         return [
-            'Nama',
+            'Nama Siswa',
+            'Ujian',
             'Keterangan',
             'Tingkat',
             'semester',
