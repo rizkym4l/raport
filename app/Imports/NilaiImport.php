@@ -24,28 +24,28 @@ class NilaiImport implements ToArray
 
         foreach ($rows as $row) {
 
-            $siswa = Siswa::where('nama_lengkap', $row[0])->first();
+            $siswa = siswa::where('nama_lengkap', $row[0])->first();
             
             // Cari mapel berdasarkan id atau kriteria lain
-            $mapel = Mapel::where('nama', $row[5])->first();
+            $mapel = Mapel::where('nama', $row[6])->first();
             if (!$mapel) {
                 // Jika mapel tidak ditemukan, lewati baris ini
                 continue;
             }
             
             // Cari tahun ajaran berdasarkan id atau kriteria lain
-            $tahunAjaran = TahunAjaran::where('tahun', $row[6])->first();
+            $tahunAjaran = TahunAjaran::where('tahun', $row[7])->first();
             if (!$tahunAjaran) {
                 // Jika tahun ajaran tidak ditemukan, lewati baris ini
                 continue;
             }
 
             Nilai::create([
-                'nama' => $siswa->nama_lengkap, 
-                'keterangan' => $row[1], 
-                'tingkat' => $row[2], 
-                'semester' => $row[3], 
-                'nilai' => $row[4], 
+                'nama' => $row[1], 
+                'keterangan' => $row[2], 
+                'tingkat' => $row[3], 
+                'semester' => $row[4], 
+                'nilai' => $row[5], 
                 'mapel_id' => $mapel->id,
                 'tahun_ajaran_id' => $tahunAjaran->id,
                 'siswa_id' => $siswa->id,
