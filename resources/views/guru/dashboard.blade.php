@@ -9,14 +9,18 @@
         <form action="{{ route('nilai.import') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="relative inline-block">
-                <input class=" 
+                <input
+                    class=" 
                 file:bg-white file:text-gray-500 file:border-0
-                file:shadow-xl  block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none " id="file_input" name="file" type="file">
+                file:shadow-xl  block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none "
+                    id="file_input" name="file" type="file">
             </div>
-            <button class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-1.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="submit">Import</button>
+            <button
+                class="text-white bg-blue-700 my-2 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-1.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                type="submit">Import</button>
         </form>
 
-        
+
 
 
         @if (session('success'))
@@ -25,10 +29,10 @@
             </div>
         @endif
 
-        <form action="{{ route('nilai.store') }}" method="POST" class="bg-white p-6 rounded shadow-md max-w-4xl mx-auto">
-            @csrf
+        {{-- <form action="{{ route('nilai.store') }}" method="POST" class="bg-white p-6 rounded shadow-md max-w-4xl mx-auto">
+            @csrf --}}
 
-            <div id="nilai-entries">
+        {{-- <div id="nilai-entries">
                 <div class="nilai-entry">
                     <div class="mb-4">
                         <label for="siswa_id" class="block text-gray-700">Siswa</label>
@@ -212,13 +216,13 @@
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
-        </div>
-    </template>
+        </div> --}}
+        </template>
 
-    <script>
-        document.getElementById('add-entry').addEventListener('click', function() {
-            var template = document.getElementById('nilai-entry-template').content.cloneNode(true);
-            document.getElementById('nilai-entries').appendChild(template);
-        });
-    </script>
-@endsection
+        <script>
+            document.getElementById('add-entry').addEventListener('click', function() {
+                var template = document.getElementById('nilai-entry-template').content.cloneNode(true);
+                document.getElementById('nilai-entries').appendChild(template);
+            });
+        </script>
+    @endsection

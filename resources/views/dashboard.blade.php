@@ -3,7 +3,14 @@
 @section('title', 'Dashboard')
 
 @section('contents')
+
     <div class="container mx-auto p-6">
+        @if (session('success'))
+            <div class="alert alert-success bg-green-200 my-8">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <div class="text-center mb-8">
             <h1 class="text-4xl font-bold text-gray-800">Selamat Datang di Dashboard E Raport</h1>
             <p class="text-gray-600 mt-2">Kami bangga menyambut Anda di platform kami, tempat kreativitas dan teknologi
@@ -34,13 +41,13 @@
                     </tr>
                     <tr class="border-b border-gray-200 hover:bg-gray-100">
                         <td class="py-3 px-6 whitespace-nowrap">2</td>
-                        <td class="py-3 px-6 whitespace-nowrap">Hart Hagerty</td>
-                        <td class="py-3 px-6 whitespace-nowrap">Desktop Support Technician</td>
+                        <td class="py-3 px-6 whitespace-nowrap"><button class="btn btn-primary">Buka</button></td>
+                        <td class="py-3 px-6 whitespace-nowrap"><button class="btn btn-neutral">Buka</button></td>
                     </tr>
                     <tr class="border-b border-gray-200 hover:bg-gray-100">
                         <td class="py-3 px-6 whitespace-nowrap">3</td>
-                        <td class="py-3 px-6 whitespace-nowrap">Brice Swyre</td>
-                        <td class="py-3 px-6 whitespace-nowrap">Tax Accountant</td>
+                        <td class="py-3 px-6 whitespace-nowrap"><button class="btn btn-primary">Buka</button></td>
+                        <td class="py-3 px-6 whitespace-nowrap"><button class="btn btn-neutral">Buka</button></td>
                     </tr>
                 </tbody>
             </table>

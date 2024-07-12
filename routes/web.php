@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NilaiController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TingkatanController;
 
 /*
@@ -40,6 +41,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/nilai/store', [NilaiController::class, 'store'])->name('nilai.store');
     Route::get('/tingkatan', [TingkatanController::class, 'index']);
     Route::get('/kelas', [TingkatanController::class, 'kelas']);
+    Route::get('/nilai/siswa', function () {
+        return view('nilaisiswa');
+    });
+    Route::post('/profile/upload', [ProfileController::class, 'uploadImage'])->name('profile.upload');
 
     Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
 });

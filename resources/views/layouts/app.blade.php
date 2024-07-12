@@ -34,12 +34,40 @@
             updateTime();
         });
     </script>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            right: 0;
+        }
+
+
+        .dropdown-menu a {
+            display: block;
+            padding: 8px 16px;
+            color: black;
+            text-decoration: none;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
 </head>
 
-<body class="bg-slate-100 h-max font-[Poppins]">
-    <div class="drawer drawer-mobile">
+<body class="bg-slate-100 h-full font-[Poppins]">
+    <div class="drawer drawer-mobile h-full">
         <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-        <div class="drawer-content flex flex-col">
+        <div class="drawer-content flex flex-col h-full">
             <nav class="bg-white shadow-md py-4 px-6 flex justify-between items-center">
                 <div class="flex items-center">
                     <img src="https://tse2.mm.bing.net/th?id=OIP.jBwefGdT24xikvtdnbmxkQHaHZ&pid=Api&P=0&h=180"
@@ -49,24 +77,34 @@
                 <div class="flex items-center space-x-4 ">
                     <span id="current-time" class="text-gray-600 hidden sm:block"></span>
                     @auth
-                        <div class="relative">
+                        <div class="relative dropdown">
                             <button class="flex items-center focus:outline-none">
                                 <img src="{{ Auth::user()->photo ? asset('storage/' . Auth::user()->photo) : 'https://via.placeholder.com/40' }}"
                                     alt="Profile" class="rounded-full h-10 w-10">
                             </button>
+                            <div class="dropdown-menu mt-2 w-48 py-2 bg-white rounded-md shadow-xl">
+                                <a href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
+                                <a href="#" id="upload-image-button">Upload Image</a>
+                            </div>
                         </div>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     @endauth
                 </div>
             </nav>
 
-            <div class="p-6">
+            <div class="p-6 flex-grow">
                 @yield('contents')
             </div>
         </div>
 
         <div class="drawer-side">
             <label for="my-drawer" class="drawer-overlay"></label>
-            <ul class="menu bg-gray-800 text-white w-80 p-4 space-y-2">
+            <ul class="menu bg-gray-800 text-white w-80 p-4 space-y-2 h-full">
                 <li><a href="#" class="hover:bg-gray-700 p-2 rounded-md">Dashboard</a></li>
                 <li><a href="#" class="hover:bg-gray-700 p-2 rounded-md">Profile</a></li>
                 <li><a href="#" class="hover:bg-gray-700 p-2 rounded-md">Settings</a></li>
@@ -74,6 +112,48 @@
             </ul>
         </div>
     </div>
+
+    <!-- Upload Image Modal -->
+    <div id="upload-image-modal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 shadow-lg">
+            <h2 class="text-lg font-semibold mb-4">Upload Image</h2>
+            <form id="upload-image-form" action="{{ route('profile.upload') }}" method="POST"
+                enctype="multipart/form-data">
+                @csrf
+                <input type="file" name="image" accept="image/*" required>
+                <div class="flex justify-end mt-4">
+                    <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded-md mr-2"
+                        id="cancel-upload">Cancel</button>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var uploadButton = document.getElementById('upload-image-button');
+            var modal = document.getElementById('upload-image-modal');
+            var cancelUploadButton = document.getElementById('cancel-upload');
+            var dropdown = document.getElementsByClassName("dropdown")[0];
+            console.log(dropdown)
+            var dropdownMenu = document.getElementsByClassName("dropdown-menu")[0];
+            console.log(dropdownMenu)
+
+
+            dropdown.addEventListener('click', function() {
+                dropdownMenu.style.display = 'block'
+            })
+
+            uploadButton.addEventListener('click', function() {
+                modal.classList.remove('hidden');
+            });
+
+            cancelUploadButton.addEventListener('click', function() {
+                modal.classList.add('hidden');
+            });
+        });
+    </script>
 </body>
 
 </html>
