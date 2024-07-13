@@ -31,19 +31,15 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 
-   
-  
-  
-    
-    
- 
-   
-  
+
+
+
+
     Route::post('/profile/upload', [ProfileController::class, 'uploadImage'])->name('profile.upload');
     Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
     Route::get('/error', function () {
         return view('error');
-    });
+    })->name('error');
     Route::middleware('checkRole:siswa')->group(function () {
         Route::get('dashboard', function () {
             return view('dashboard');
@@ -53,12 +49,15 @@ Route::middleware('auth')->group(function () {
     Route::middleware('checkRole:guru')->group(function () {
         Route::get('/nilai/create/{tingkat}/{kelas}/{mapel}/{semester}', [NilaiController::class, 'create'])->name('nilai.create');
         Route::post('/nilai/import', [NilaiController::class, 'import'])->name('nilai.import');
-         Route::get('/nilai/export', [NilaiController::class, 'export'])->name('nilai.export');
+        Route::get('/nilai/export', [NilaiController::class, 'export'])->name('nilai.export');
         Route::post('/nilai/store', [NilaiController::class, 'store'])->name('nilai.store');
-      Route::get('/tingkatan', [TingkatanController::class, 'index']);
-          Route::get('/kelas/{tingkatan}', [TingkatanController::class, 'kelas']);
-       Route::get('/mapel/{tingkatan}/{kelas}', [MapelController::class, 'index']);
-    Route::get('/semester/{tingkat}/{kelas}/{mapel}', [NilaiController::class, 'semester']);
-         Route::get('/nilai/siswa/{tingkat}/{semester}', [NilaiController::class, 'index']);
+        Route::get('/tingkatan', [TingkatanController::class, 'index'])->name('tingkatan');
+        Route::get('/kelas/{tingkatan}', [TingkatanController::class, 'kelas']);
+        Route::get('/mapel/{tingkatan}/{kelas}', [MapelController::class, 'index']);
+        Route::get('/semester/{tingkat}/{kelas}/{mapel}', [NilaiController::class, 'semester']);
+        Route::get('/nilai/siswa/{tingkat}/{semester}', [NilaiController::class, 'index']);
     });
+});
+Route::fallback(function () {
+    return redirect()->route('error');
 });
