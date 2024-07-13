@@ -24,6 +24,13 @@ class NilaiController extends Controller
         return view('nilaisiswa', ['nilai' => $nilai]);
 
     }
+
+    public function semester($tingkat, $kelas, $mapel)
+    {
+
+        return view('semester', ['tingkat' => $tingkat, 'kelas' => $kelas, 'mapel' => $mapel]);
+
+    }
     public function create()
     {
         $mapel = Mapel::all();

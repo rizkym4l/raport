@@ -21,10 +21,7 @@ class NilaiExport implements WithHeadings, ShouldAutoSize
             'Nama Siswa',
             'Nama',
             'Keterangan',
-            'Tingkat',
-            'semester',
             'Nilai',
-            'Mapel',
             'Tahun Ajaran',
         ];
     }

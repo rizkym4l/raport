@@ -4,16 +4,17 @@
 
 @section('contents')
     <div class="container mx-auto px-4 py-8">
-        <h1 class="text-4xl font-bold text-center mb-8 text-blue-600">Pilih Kelas</h1>
+        <h1 class="text-4xl font-bold text-center mb-8 text-blue-600">Pilih Mapel</h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach ($kelas as $item)
-                <a href="/mapel/{{ $tingkat }}/{{ $item->id }}"
+
+            @foreach ($Mapel as $item)
+                <a href="/semester/{{ $tingkat }}/{{ $kelas }}/{{ $item->id }}"
                     class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
                     <div class="flex items-center justify-center mb-4">
                         <img src="https://via.placeholder.com/50" alt="Icon"
                             class="w-16 h-16 rounded-full border-2 border-blue-600">
                     </div>
-                    <h2 class="text-2xl font-semibold text-center text-gray-800">{{ $item->nama_kelas }}</h2>
+                    <h2 class="text-2xl font-semibold text-center text-gray-800">{{ $item->nama }}</h2>
                 </a>
             @endforeach
         </div>
