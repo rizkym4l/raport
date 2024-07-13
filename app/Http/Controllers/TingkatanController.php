@@ -14,11 +14,11 @@ class TingkatanController extends Controller
     public function kelas($tingkat)
     {
         $kelas = Kelas::where('tingkat', $tingkat)->get();
-        return view('kelas', ['kelas' => $kelas]);
+        return view('kelas', ['kelas' => $kelas, 'tingkat' => $tingkat]);
     }
 
     public function inputNilai()
     {
-        return view('input-nilai'); // Pastikan Anda sudah punya view untuk halaman input nilai
+        return view('input-nilai');
     }
 }

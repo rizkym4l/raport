@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MapelController;
 use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TingkatanController;
@@ -36,12 +37,14 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 
-    Route::get('/nilai/create/{id}', [NilaiController::class, 'create'])->name('nilai.create');
+    Route::get('/nilai/create/{tingkat}/{kelas}/{mapel}/{semester}', [NilaiController::class, 'create'])->name('nilai.create');
     Route::post('/nilai/import', [NilaiController::class, 'import'])->name('nilai.import');
     Route::get('/nilai/export', [NilaiController::class, 'export'])->name('nilai.export');
     Route::post('/nilai/store', [NilaiController::class, 'store'])->name('nilai.store');
     Route::get('/tingkatan', [TingkatanController::class, 'index']);
-    Route::get('/kelas/{id}', [TingkatanController::class, 'kelas']);
+    Route::get('/kelas/{tingkatan}', [TingkatanController::class, 'kelas']);
+    Route::get('/mapel/{tingkatan}/{kelas}', [MapelController::class, 'index']);
+    Route::get('/semester/{tingkat}/{kelas}/{mapel}', [NilaiController::class, 'semester']);
     Route::get('/nilai/siswa/{tingkat}/{semester}', [NilaiController::class, 'index']);
     Route::post('/profile/upload', [ProfileController::class, 'uploadImage'])->name('profile.upload');
 
