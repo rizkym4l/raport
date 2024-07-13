@@ -16,34 +16,36 @@ use App\Http\Controllers\TingkatanController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::middleware('guest')->controller(AuthController::class)->group(function () {
     Route::get('register', 'register')->name('register');
     Route::post('register', 'registerSave')->name('register.save');
 
-    Route::get('login', 'login')->name('login');
-    Route::post('login', 'loginAction')->name('login.action');
+    Route::get('/', 'login')->name('login');
+    Route::post('/', 'loginAction')->name('login.action');
 
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-
-
-    Route::get('/nilai/create/{id}', [NilaiController::class, 'create'])->name('nilai.create');
-    Route::post('/nilai/import', [NilaiController::class, 'import'])->name('nilai.import');
-    Route::get('/nilai/export', [NilaiController::class, 'export'])->name('nilai.export');
-    Route::post('/nilai/store', [NilaiController::class, 'store'])->name('nilai.store');
-    Route::get('/tingkatan', [TingkatanController::class, 'index']);
-    Route::get('/kelas/{id}', [TingkatanController::class, 'kelas']);
-    Route::get('/nilai/siswa/{tingkat}/{semester}', [NilaiController::class, 'index']);
     Route::post('/profile/upload', [ProfileController::class, 'uploadImage'])->name('profile.upload');
-
     Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
+    Route::get('/error', function () {
+        return view('error');
+    });
+    Route::middleware('checkRole:siswa')->group(function () {
+        Route::get('dashboard', function () {
+            return view('dashboard');
+        })->name('dashboard');
+    });
+
+    Route::middleware('checkRole:guru')->group(function () {
+        Route::get('/nilai/create/{id}', [NilaiController::class, 'create'])->name('nilai.create');
+        Route::post('/nilai/import', [NilaiController::class, 'import'])->name('nilai.import');
+        Route::get('/nilai/export', [NilaiController::class, 'export'])->name('nilai.export');
+        Route::post('/nilai/store', [NilaiController::class, 'store'])->name('nilai.store');
+        Route::get('/tingkatan', [TingkatanController::class, 'index'])->name('tingkatan');
+        Route::get('/kelas/{id}', [TingkatanController::class, 'kelas']);
+        Route::get('/nilai/siswa/{tingkat}/{semester}', [NilaiController::class, 'index']);
+    });
 });

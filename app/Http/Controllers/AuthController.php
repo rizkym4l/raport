@@ -26,18 +26,42 @@ class AuthController extends Controller
     }
     public function loginAction(Request $request)
     {
-        Validator::make($request->all(), ['email' => 'required|email', 'password' => 'required'])->validate();
-        if (!Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
-            throw ValidationException::withMessages(['email' => trans('auth.failed')]);
+        // Validasi input
+        // Validator::make($request->all(), [
+        //     'email' => 'required|email',
+        //     'password' => 'required'
+            
+        // ])->validate();
+    
+        // // Coba otentikasi pengguna
+        // if (!Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
+        //     throw ValidationException::withMessages(['email' => trans('auth.failed')]);
+        // }
+
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        $user = $request->only(['email', 'password']);
+        if (Auth::attempt($user)) {
+            $user = Auth::user();
+
+            if ($user->role == 'guru'){
+                return redirect()->route('tingkatan');
+            } elseif($user->role == 'siswa'){
+                return redirect()->route('dashboard');
+            }
         }
-        $request->session()->regenerate();
-        return redirect()->route('dashboard');
+        
+
     }
+    
     public function logout(Request $request)
     {
         Auth::guard('web')->logout();
         $request->session()->invalidate();
-        return redirect('/login');
+        return redirect('/');
     }
     public function profile()
     {
