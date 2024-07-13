@@ -2,17 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\NilaiExport;
-use Illuminate\Http\Request;
-use App\Models\Nilai;
+use Exception;
 use App\Models\Mapel;
+use App\Models\Nilai;
 use App\Models\Siswa;
 use App\Models\TahunAjaran;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\NilaiExport;
 use App\Imports\NilaiImport;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class NilaiController extends Controller
 {
+    public function index($tingkat, $semester)
+    {
+        $user = Auth::user()->id;
+        $siswa = Siswa::where('akun_id', $user)->first();
+        $nilai = Nilai::where('tingkat', $tingkat)->where('semester', $semester)->where('siswa_id', $siswa->id)->get();
+
+        return view('nilaisiswa', ['nilai' => $nilai]);
+
+    }
     public function create()
     {
         $mapel = Mapel::all();
@@ -32,6 +43,7 @@ class NilaiController extends Controller
             'nilai' => 'required|numeric|min:0|max:100',
             'keterangan' => 'nullable|string|max:255',
         ]);
+
 
         $nilai = new Nilai;
         $nilai->siswa_id = $request->input('siswa_id');
@@ -53,10 +65,13 @@ class NilaiController extends Controller
         $request->validate([
             'file' => 'required|mimes:xls,xlsx',
         ]);
-        
-        Excel::import(new NilaiImport, $request->file('file'));
 
-        return redirect()->back()->with('success', 'Data berhasil diimpor!');
+        try {
+            Excel::import(new NilaiImport, $request->file('file'));
+            return redirect()->back()->with('success', 'Data berhasil diimpor!');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     public function export()

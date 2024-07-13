@@ -68,7 +68,7 @@
     <div class="drawer drawer-mobile h-full">
         <input id="my-drawer" type="checkbox" class="drawer-toggle" />
         <div class="drawer-content flex flex-col h-full">
-            <nav class="bg-white shadow-md py-4 px-6 flex justify-between items-center">
+            <nav class="bg-white shadow-2xl border-b-2 border-slate-200 py-4 px-6 flex justify-between items-center">
                 <div class="flex items-center">
                     <img src="https://tse2.mm.bing.net/th?id=OIP.jBwefGdT24xikvtdnbmxkQHaHZ&pid=Api&P=0&h=180"
                         alt="Logo" class="w-10 h-10 mx-2">
@@ -97,7 +97,7 @@
                 </div>
             </nav>
 
-            <div class="p-6 flex-grow">
+            <div class="sm:p-6 flex-grow bg-slate-100">
                 @yield('contents')
             </div>
         </div>

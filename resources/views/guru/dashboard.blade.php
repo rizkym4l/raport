@@ -3,7 +3,27 @@
 @section('title', 'Input Nilai Siswa')
 
 @section('contents')
-    <div class="container mx-auto py-8">
+    <div class="container p-5 mx-auto py-8">
+        @if (session('error'))
+            @if (session('success'))
+                <div class="bg-green-100 hidden text-green-700 p-4 rounded mb-6">
+                    {{ session('success') }}
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="bg-red-100 text-red-700 p-4 rounded mb-6">
+                    {{ session('error') }}
+                </div>
+            @endif
+        @elseif(session('success'))
+            @if (session('success'))
+                <div class="bg-green-100  text-green-700 p-4 rounded mb-6">
+                    {{ session('success') }}
+                </div>
+            @endif
+        @endif
+
+
         <h2 class="text-2xl font-semibold">Input Nilai Siswa</h2>
         <p class="mb-6">Silahkan Unduh Template <a href="{{ route('nilai.export') }}"><u>Di Sini</u></a></p>
         <form action="{{ route('nilai.import') }}" method="POST" enctype="multipart/form-data">
@@ -23,11 +43,7 @@
 
 
 
-        @if (session('success'))
-            <div class="bg-green-100 text-green-700 p-4 rounded mb-6">
-                {{ session('success') }}
-            </div>
-        @endif
+
 
         {{-- <form action="{{ route('nilai.store') }}" method="POST" class="bg-white p-6 rounded shadow-md max-w-4xl mx-auto">
             @csrf --}}

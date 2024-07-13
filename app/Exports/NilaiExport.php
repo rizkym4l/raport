@@ -11,21 +11,21 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 class NilaiExport implements WithHeadings, ShouldAutoSize
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
 
 
     public function headings(): array
     {
         return [
             'Nama Siswa',
-            'Ujian',
+            'Nama',
             'Keterangan',
             'Tingkat',
             'semester',
             'Nilai',
             'Mapel',
-            'Tahun Ajaran',  
+            'Tahun Ajaran',
         ];
     }
 

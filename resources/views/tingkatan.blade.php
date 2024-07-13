@@ -4,12 +4,12 @@
 
 @section('contents')
 
-    <div class="container mx-auto px-4 py-8 h-full">
+    <div class="container mx-auto px-4 py-8 h-full ">
         <h1 class="text-3xl font-semibold text-center mb-8">Pilih Tingkatan</h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 ">
             <div class="1">
                 <div class="grid grid-cols-1 sm:grid-cols-1 gap-6 my-4">
-                    <a href="/kelas"
+                    <a href="/kelas/1"
                         class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">
                         <div class="flex items-center justify-center mb-4">
                             <img src="{{ asset('assets/number-one.png') }}" alt="Icon" class="w-12 h-12">
@@ -18,7 +18,7 @@
                     </a>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-1 gap-6 my-4">
-                    <a href="/kelas"
+                    <a href="/kelas/2"
                         class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">
                         <div class="flex items-center justify-center mb-4">
                             <img src="{{ asset('assets/2.png') }}" alt="Icon" class="w-12 h-12">
@@ -27,7 +27,7 @@
                     </a>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-1 gap-6 my-4">
-                    <a href="/kelas"
+                    <a href="/kelas/3"
                         class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">
                         <div class="flex items-center justify-center mb-4">
                             <img src="{{ asset('assets/number-3.png') }}" alt="Icon" class="w-12 h-12">

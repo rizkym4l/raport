@@ -27,23 +27,22 @@ Route::middleware('guest')->controller(AuthController::class)->group(function ()
     Route::get('login', 'login')->name('login');
     Route::post('login', 'loginAction')->name('login.action');
 
-    Route::get('logout', 'logout')->middleware('auth')->name('logout');
 });
 
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::get('/nilai/create', [NilaiController::class, 'create'])->name('nilai.create');
+
+    Route::get('/nilai/create/{id}', [NilaiController::class, 'create'])->name('nilai.create');
     Route::post('/nilai/import', [NilaiController::class, 'import'])->name('nilai.import');
     Route::get('/nilai/export', [NilaiController::class, 'export'])->name('nilai.export');
     Route::post('/nilai/store', [NilaiController::class, 'store'])->name('nilai.store');
     Route::get('/tingkatan', [TingkatanController::class, 'index']);
-    Route::get('/kelas', [TingkatanController::class, 'kelas']);
-    Route::get('/nilai/siswa', function () {
-        return view('nilaisiswa');
-    });
+    Route::get('/kelas/{id}', [TingkatanController::class, 'kelas']);
+    Route::get('/nilai/siswa/{tingkat}/{semester}', [NilaiController::class, 'index']);
     Route::post('/profile/upload', [ProfileController::class, 'uploadImage'])->name('profile.upload');
 
     Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');

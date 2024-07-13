@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Kelas;
 use Illuminate\Http\Request;
 
 class TingkatanController extends Controller
@@ -10,9 +11,10 @@ class TingkatanController extends Controller
         return view('tingkatan');
     }
 
-    public function kelas()
+    public function kelas($tingkat)
     {
-        return view('kelas');
+        $kelas = Kelas::where('tingkat', $tingkat)->get();
+        return view('kelas', ['kelas' => $kelas]);
     }
 
     public function inputNilai()
