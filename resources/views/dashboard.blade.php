@@ -36,7 +36,8 @@
                 <tbody class="text-gray-600 text-sm font-light">
                     <tr class="border-b border-gray-200 hover:bg-gray-100">
                         <td class="py-3 px-6 whitespace-nowrap">1</td>
-                        <td class="py-3 px-6 whitespace-nowrap"><button class="btn btn-primary">Buka</button></td>
+                        <td class="py-3 px-6 whitespace-nowrap"><a href="nilai/siswa/1/1"><button
+                                    class="btn btn-neutral">Buka</button></a></td>
                         <td class="py-3 px-6 whitespace-nowrap"><a href="nilai/siswa/1/2"><button
                                     class="btn btn-neutral">Buka</button></a></td>
                     </tr>

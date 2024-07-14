@@ -28,7 +28,7 @@ return new class extends Migration {
         });
         Schema::create('nilai', function (Blueprint $table) {
             $table->id();
-            $table->string('nama', 100);
+            $table->enum('nama', ['Harian', 'Ujian Tengah Semester', 'Ujian Akhir Semester', 'Ujian Harian']);
             $table->string('keterangan', 100);
             $table->integer('tingkat');
             $table->integer('semester');

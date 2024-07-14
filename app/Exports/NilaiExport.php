@@ -19,7 +19,6 @@ class NilaiExport implements WithHeadings, ShouldAutoSize
     {
         return [
             'Nama Siswa',
-            'Nama',
             'Keterangan',
             'Nilai',
             'Tahun Ajaran',

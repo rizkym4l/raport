@@ -4,6 +4,7 @@
 
 @section('contents')
     <div class="container p-5 mx-auto py-8">
+        {{ $tingkat }}
         @if (session('error'))
             @if (session('success'))
                 <div class="bg-green-100 hidden text-green-700 p-4 rounded mb-6">
@@ -26,7 +27,9 @@
 
         <h2 class="text-2xl font-semibold">Input Nilai Siswa</h2>
         <p class="mb-6">Silahkan Unduh Template <a href="{{ route('nilai.export') }}"><u>Di Sini</u></a></p>
-        <form action="{{ route('nilai.import') }}" method="POST" enctype="multipart/form-data">
+        <form
+            action="{{ route('nilai.import', ['tingkat' => $tingkat, 'kelas' => $kelas, 'mapel' => $mapel, 'semester' => $semester, 'nilai' => $nilai]) }}"
+            method="POST" enctype="multipart/form-data">
             @csrf
             <div class="relative inline-block">
                 <input

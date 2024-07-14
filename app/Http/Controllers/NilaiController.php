@@ -31,14 +31,19 @@ class NilaiController extends Controller
         return view('semester', ['tingkat' => $tingkat, 'kelas' => $kelas, 'mapel' => $mapel]);
 
     }
-    public function create()
+    public function nilai($tingkat, $kelas, $mapel, $semester)
     {
-        $mapel = Mapel::all();
-        $siswa = Siswa::all();
-        $tahun_ajaran = TahunAjaran::all();
 
-        return view('guru.dashboard', compact('mapel', 'siswa', 'tahun_ajaran'));
+        return view('nilai', ['tingkat' => $tingkat, 'kelas' => $kelas, 'mapel' => $mapel, 'semester' => $semester]);
+
     }
+    public function create($tingkat, $kelas, $mapel, $semester, $nilai)
+    {
+
+
+        return view('guru.dashboard', compact('tingkat', 'kelas', 'mapel', 'semester', 'nilai'));
+    }
+
 
     public function store(Request $request)
     {
@@ -69,12 +74,10 @@ class NilaiController extends Controller
 
     public function import(Request $request)
     {
-        $request->validate([
-            'file' => 'required|mimes:xls,xlsx',
-        ]);
+        $data = $request->only(['tingkat', 'kelas', 'mapel', 'semester', 'nilai']);
 
         try {
-            Excel::import(new NilaiImport, $request->file('file'));
+            Excel::import(new NilaiImport($data), $request->file('file'));
             return redirect()->back()->with('success', 'Data berhasil diimpor!');
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
