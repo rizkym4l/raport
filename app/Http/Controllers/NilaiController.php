@@ -19,11 +19,54 @@ class NilaiController extends Controller
     {
         $user = Auth::user()->id;
         $siswa = Siswa::where('akun_id', $user)->first();
-        $nilai = Nilai::where('tingkat', $tingkat)->where('semester', $semester)->where('siswa_id', $siswa->id)->get();
 
-        return view('nilaisiswa', ['nilai' => $nilai]);
+        $uniqueMapelIds = Nilai::where('tingkat', $tingkat)
+            ->where('semester', $semester)
+            ->where('siswa_id', $siswa->id)
+            ->distinct()
+            ->pluck('mapel_id');
 
+        $data = [];
+
+        foreach ($uniqueMapelIds as $mapelId) {
+            $nilaiData = Nilai::where('tingkat', $tingkat)
+                ->where('semester', $semester)
+                ->where('siswa_id', $siswa->id)
+                ->where('mapel_id', $mapelId)
+                ->get();
+
+            $mapelData = [
+                'mapel_id' => Mapel::where('id', $mapelId)->pluck('nama')[0],
+                'Harian' => null,
+                'Ujian Harian' => null,
+                'Ujian Tengah Semester' => null,
+                'Ujian Akhir Semester' => null,
+                'rata_rata' => 0,
+                'keterangan' => ''
+            ];
+
+            $nilaiCount = 0;
+            $totalNilai = 0;
+
+            foreach ($nilaiData as $nilai) {
+                $mapelData[$nilai->nama] = $nilai->nilai;
+                $totalNilai += $nilai->nilai;
+                $nilaiCount++;
+                if ($nilai->keterangan) {
+                    $mapelData['keterangan'] = $nilai->keterangan;
+                }
+            }
+
+            if ($nilaiCount > 0) {
+                $mapelData['rata_rata'] = $totalNilai / $nilaiCount;
+            }
+
+            $data[] = $mapelData;
+        }
+
+        return view('nilaisiswa', ['data' => $data]);
     }
+
 
     public function semester($tingkat, $kelas, $mapel)
     {
