@@ -6,8 +6,8 @@
     <div class="sm:container sm:mx-auto sm:px-4 py-8 h-full">
         <div class="flex items-center mb-8">
             <button onclick="window.history.back()"
-                class="btn bg-slate-200 border-slate-300 border-2 hover:bg-slate-50 hover:border-slate-100 mr-auto">Kembali</button>
-            <h1 class="text-3xl font-semibold text-center w-full">Data Nilai</h1>
+                class="btn bg-slate-200 mx-2 sm:mx-0 border-slate-300 border-2 hover:bg-slate-50 hover:border-slate-100 mr-auto">Kembali</button>
+            <h1 class="text-3xl font-semibold  mx-2 sm:mx-10 w-full">Data Nilai</h1>
         </div>
         <div class="overflow-x-auto">
             @if (count($data) === 0)
