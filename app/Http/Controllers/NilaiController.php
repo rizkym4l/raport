@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kelas;
 use Exception;
 use App\Models\Mapel;
 use App\Models\Nilai;
@@ -82,9 +83,9 @@ class NilaiController extends Controller
     }
     public function create($tingkat, $kelas, $mapel, $semester, $nilai)
     {
-
-
-        return view('guru.dashboard', compact('tingkat', 'kelas', 'mapel', 'semester', 'nilai'));
+        $class = Kelas::find($kelas);
+        $Mapel = Mapel::find($mapel);
+        return view('guru.dashboard', compact('tingkat', 'Mapel', 'class', 'kelas', 'mapel', 'semester', 'nilai'));
     }
 
 

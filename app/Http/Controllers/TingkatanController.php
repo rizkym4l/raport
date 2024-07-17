@@ -12,7 +12,7 @@ class TingkatanController extends Controller
     }
 
     public function kelas($tingkat)
-    {
+    {   
         $kelas = Kelas::where('tingkat', $tingkat)->get();
         return view('kelas', ['kelas' => $kelas, 'tingkat' => $tingkat]);
     }
