@@ -7,7 +7,7 @@
         <div class="flex items-center mb-8">
             <button onclick="window.history.back()"
                 class="btn bg-slate-200 mx-2 sm:mx-0 border-slate-300 border-2 hover:bg-slate-50 hover:border-slate-100 mr-auto">Kembali</button>
-            <h1 class="text-3xl font-semibold  mx-2 sm:mx-10 w-full">Data Nilai</h1>
+            <h1 class="text-3xl font-semibold mx-2 sm:mx-10 w-full">Data Nilai</h1>
         </div>
         <div class="overflow-x-auto">
             @if (count($data) === 0)
@@ -50,25 +50,27 @@
                     <thead>
                         <tr>
                             <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">Mapel</th>
-                            <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">UH </th>
-                            <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">Nilai Harian</th>
-                            <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">UTS</th>
-                            <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">UAS</th>
-                            <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">Nilai Rata-rata</th>
-                            <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">Keterangan</th>
+                            <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">Sumatif 1</th>
+                            <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">Sumatif 2</th>
+                            <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">Sumatif 3</th>
+                            <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">Formatif 1</th>
+                            <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">Formatif 2</th>
+                            <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">Formatif 3</th>
+                            <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">Sumatif Tengah Semester</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($data as $mapelData)
                             <tr class="hover:bg-gray-100 text-center">
-                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['mapel_id'] }}</td>
-                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['Ujian Harian'] }}</td>
-                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['Harian'] }}</td>
-                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['Ujian Tengah Semester'] }}
-                                </td>
-                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['Ujian Akhir Semester'] }}</td>
-                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['rata_rata'] }}</td>
-                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['keterangan'] }}</td>
+                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['mapel_id'] ?? '-' }}</td>
+                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['sumatif1'] ?? '-' }}</td>
+                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['sumatif2'] ?? '-' }}</td>
+                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['sumatif3'] ?? '-' }}</td>
+                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['formatif1'] ?? '-' }}</td>
+                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['formatif2'] ?? '-' }}</td>
+                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['formatif3'] ?? '-' }}</td>
+                                <td class="py-2 px-4 border-b border-gray-200">
+                                    {{ $mapelData['sumatiftengahsemester'] ?? '-' }}</td>
                             </tr>
                         @endforeach
                     </tbody>

@@ -19,7 +19,7 @@ class Nilai extends Model
         'nilai',
         'mapel_id',
         'tahun_ajaran_id',
-        'siswa_id',
+        'nis_siswa',
     ];
 
     public function siswa()

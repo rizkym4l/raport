@@ -32,12 +32,12 @@ class NilaiImport implements ToArray
                 throw new Exception('Baris data tidak lengkap: ' . json_encode($row));
             }
 
-            // Debugging output
-            var_dump($row);
+            // dd($this->data);
+            // die();
 
-            $siswa = Siswa::where('nama_lengkap', $row[0])->first();
+            $siswa = Siswa::where('nis', $row[0])->first();
             if (!$siswa) {
-                throw new Exception('Nama siswa tidak tersedia: ' . $row[0]);
+                throw new Exception('nis tidak tersedia: ' . $row[0]);
             }
 
             $tahunAjaran = TahunAjaran::where('tahun', $row[3])->first();
@@ -46,10 +46,14 @@ class NilaiImport implements ToArray
             }
 
             $nilaiTypes = [
-                1 => 'Harian',
-                2 => 'Ujian Harian',
-                3 => 'Ujian Tengah Semester',
-                4 => 'Ujian Akhir Semester'
+                1 => 'sumatif1',
+                2 => 'sumatif2',
+                3 => 'sumatif3',
+                4 => 'formatif1',
+                5 => 'formatif2',
+                6 => 'formatif3',
+                7 => 'sumatiftengahsemester',
+
             ];
 
             if (array_key_exists($this->data['nilai'], $nilaiTypes)) {
@@ -62,7 +66,7 @@ class NilaiImport implements ToArray
                     'nilai' => $row[2],
                     'mapel_id' => $this->data['mapel'],
                     'tahun_ajaran_id' => $tahunAjaran->id,
-                    'siswa_id' => $siswa->id,
+                    'nis_siswa' => $siswa->nis,
                 ]);
             } else {
                 throw new Exception('Nilai type tidak valid: ' . $this->data['nilai']);

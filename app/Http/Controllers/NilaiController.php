@@ -23,7 +23,7 @@ class NilaiController extends Controller
 
         $uniqueMapelIds = Nilai::where('tingkat', $tingkat)
             ->where('semester', $semester)
-            ->where('siswa_id', $siswa->id)
+            ->where('nis_siswa', $siswa->nis)
             ->distinct()
             ->pluck('mapel_id');
 
@@ -32,7 +32,7 @@ class NilaiController extends Controller
         foreach ($uniqueMapelIds as $mapelId) {
             $nilaiData = Nilai::where('tingkat', $tingkat)
                 ->where('semester', $semester)
-                ->where('siswa_id', $siswa->id)
+                ->where('nis_siswa', $siswa->nis)
                 ->where('mapel_id', $mapelId)
                 ->get();
 
@@ -85,8 +85,34 @@ class NilaiController extends Controller
     {
         $class = Kelas::find($kelas);
         $Mapel = Mapel::find($mapel);
-        return view('guru.dashboard', compact('tingkat', 'Mapel', 'class', 'kelas', 'mapel', 'semester', 'nilai'));
+        $nilai1 = $nilai;
+        switch ($nilai1) {
+            case 1:
+                $nilai = 'sumatif 1';
+                break;
+            case 2:
+                $nilai = 'sumatif 2';
+                break;
+            case 3:
+                $nilai = 'sumatif 3';
+                break;
+            case 4:
+                $nilai = 'formatif 1';
+                break;
+            case 5:
+                $nilai = 'formatif 2';
+                break;
+            case 6:
+                $nilai = 'formatif 3';
+                break;
+            case 7:
+                $nilai = 'sumatif tengah semester';
+                break;
+        }
+
+        return view('guru.dashboard', compact('tingkat', 'Mapel', 'class', 'kelas', 'mapel', 'semester', 'nilai', 'nilai1'));
     }
+
 
 
     public function store(Request $request)
