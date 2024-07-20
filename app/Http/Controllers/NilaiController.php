@@ -19,7 +19,7 @@ class NilaiController extends Controller
     public function index($tingkat, $semester)
     {
         $user = Auth::user()->id;
-        $siswa = Siswa::where('akun_id', $user)->first();
+        $siswa = Siswa::where('akun_id', $user)->with('kelas')->first();
 
         $uniqueMapelIds = Nilai::where('tingkat', $tingkat)
             ->where('semester', $semester)
@@ -38,12 +38,13 @@ class NilaiController extends Controller
 
             $mapelData = [
                 'mapel_id' => Mapel::where('id', $mapelId)->pluck('nama')[0],
-                'Harian' => null,
-                'Ujian Harian' => null,
-                'Ujian Tengah Semester' => null,
-                'Ujian Akhir Semester' => null,
-                'rata_rata' => 0,
-                'keterangan' => ''
+                'sumatif1' => null,
+                'sumatif2' => null,
+                'sumatif3' => null,
+                'formatif1' => null,
+                'formatif2' => null,
+                'formatif3' => null,
+                'sumatiftengahsemester' => null
             ];
 
             $nilaiCount = 0;
@@ -65,7 +66,11 @@ class NilaiController extends Controller
             $data[] = $mapelData;
         }
 
-        return view('nilaisiswa', ['data' => $data]);
+        return view('nilaisiswa', [
+            'data' => $data,
+            'siswa' => $siswa,
+            'nama_kelas' => $siswa->kelas->nama_kelas
+        ]);
     }
 
 

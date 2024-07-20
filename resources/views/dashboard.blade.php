@@ -37,23 +37,23 @@
                     <tr class="border-b border-gray-200 hover:bg-gray-100">
                         <td class="py-3 px-6 whitespace-nowrap">1</td>
                         <td class="py-3 px-6 whitespace-nowrap"><a href="nilai/siswa/1/1"><button
-                                    class="btn btn-primary text-white">Buka</button></a></td>
+                                    class="btn bg-blue-500 border-none text-white">Buka</button></a></td>
                         <td class="py-3 px-6 whitespace-nowrap"><a href="nilai/siswa/1/2"><button
-                                    class="btn btn-primary text-white">Buka</button></a></td>
+                                    class="btn bg-blue-500 border-none text-white">Buka</button></a></td>
                     </tr>
                     <tr class="border-b border-gray-200 hover:bg-gray-100">
                         <td class="py-3 px-6 whitespace-nowrap">2</td>
                         <td class="py-3 px-6 whitespace-nowrap"><a href="nilai/siswa/2/1"><button
-                                    class="btn btn-primary text-white">Buka</button></a></td>
+                                    class="btn bg-blue-500 border-none text-white">Buka</button></a></td>
                         <td class="py-3 px-6 whitespace-nowrap"><a href="nilai/siswa/2/2"><button
-                                    class="btn btn-primary text-white">Buka</button></a></td>
+                                    class="btn bg-blue-500 border-none text-white">Buka</button></a></td>
                     </tr>
                     <tr class="border-b border-gray-200 hover:bg-gray-100">
                         <td class="py-3 px-6 whitespace-nowrap">3</td>
                         <td class="py-3 px-6 whitespace-nowrap"><a href="nilai/siswa/3/1"><button
-                                    class="btn btn-primary text-white">Buka</button></a></td>
+                                    class="btn bg-blue-500 border-none text-white">Buka</button></a></td>
                         <td class="py-3 px-6 whitespace-nowrap"><a href="nilai/siswa/3/2"><button
-                                    class="btn btn-primary text-white">Buka</button></a></td>
+                                    class="btn bg-blue-500 border-none text-white">Buka</button></a></td>
                     </tr>
                 </tbody>
             </table>

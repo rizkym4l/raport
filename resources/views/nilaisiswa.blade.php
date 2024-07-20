@@ -6,10 +6,16 @@
     <div class="sm:container sm:mx-auto sm:px-4 py-8 h-full">
         <div class="flex items-center mb-8">
             <button onclick="window.history.back()"
-                class="btn bg-slate-200 mx-2 sm:mx-0 border-slate-300 border-2 hover:bg-slate-50 hover:border-slate-100 mr-auto">Kembali</button>
-            <h1 class="text-3xl font-semibold mx-2 sm:mx-10 w-full">Data Nilai</h1>
+                class="btn bg-blue-500 text-white mx-2 sm:mx-0 border-blue-600 border-2 hover:bg-blue-600 hover:border-blue-700 mr-auto">Kembali</button>
+            <h1 class="text-3xl font-semibold mx-2 sm:mx-10 w-full text-blue-800">Data Nilai</h1>
         </div>
         <div class="overflow-x-auto">
+            <div class="mb-4 p-4 bg-blue-100 rounded-lg shadow-md">
+                <p class="text-lg"><strong>NIS:</strong> <span class="text-blue-700">{{ $siswa->nis }}</span></p>
+                <p class="text-lg"><strong>Nama Lengkap:</strong> <span
+                        class="text-blue-700">{{ $siswa->nama_lengkap }}</span></p>
+                <p class="text-lg"><strong>Nama Kelas:</strong> <span class="text-blue-700">{{ $nama_kelas }}</span></p>
+            </div>
             @if (count($data) === 0)
                 <div class="flex justify-center items-center h-64">
                     <div class="text-center">
@@ -46,29 +52,30 @@
                     </div>
                 </div>
             @else
-                <table class="min-w-full bg-white">
+                <table class="min-w-full bg-white shadow-md rounded-lg">
                     <thead>
                         <tr>
-                            <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">Mapel</th>
-                            <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">Sumatif 1</th>
-                            <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">Sumatif 2</th>
-                            <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">Sumatif 3</th>
-                            <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">Formatif 1</th>
-                            <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">Formatif 2</th>
-                            <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">Formatif 3</th>
-                            <th class="py-2 px-4 bg-gray-100 border-b border-gray-200">Sumatif Tengah Semester</th>
+                            <th class="py-2 px-4 bg-blue-500 text-white border-b border-blue-600">Mapel</th>
+                            <th class="py-2 px-4 bg-blue-500 text-white border-b border-blue-600">Formatif 1</th>
+                            <th class="py-2 px-4 bg-blue-500 text-white border-b border-blue-600">Formatif 2</th>
+                            <th class="py-2 px-4 bg-blue-500 text-white border-b border-blue-600">Formatif 3</th>
+                            <th class="py-2 px-4 bg-blue-500 text-white border-b border-blue-600">Sumatif 1</th>
+                            <th class="py-2 px-4 bg-blue-500 text-white border-b border-blue-600">Sumatif 2</th>
+                            <th class="py-2 px-4 bg-blue-500 text-white border-b border-blue-600">Sumatif 3</th>
+                            <th class="py-2 px-4 bg-blue-500 text-white border-b border-blue-600">Sumatif Tengah Semester
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($data as $mapelData)
-                            <tr class="hover:bg-gray-100 text-center">
+                            <tr class="hover:bg-blue-100 text-center">
                                 <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['mapel_id'] ?? '-' }}</td>
-                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['sumatif1'] ?? '-' }}</td>
-                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['sumatif2'] ?? '-' }}</td>
-                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['sumatif3'] ?? '-' }}</td>
                                 <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['formatif1'] ?? '-' }}</td>
                                 <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['formatif2'] ?? '-' }}</td>
                                 <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['formatif3'] ?? '-' }}</td>
+                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['sumatif1'] ?? '-' }}</td>
+                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['sumatif2'] ?? '-' }}</td>
+                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['sumatif3'] ?? '-' }}</td>
                                 <td class="py-2 px-4 border-b border-gray-200">
                                     {{ $mapelData['sumatiftengahsemester'] ?? '-' }}</td>
                             </tr>
