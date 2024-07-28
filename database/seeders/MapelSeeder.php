@@ -15,18 +15,23 @@ class MapelSeeder extends Seeder
     public function run()
     {
         $mapels = [
-            ['nama' => 'Matematika', 'kode_mapel' => 'MATH'],
+            ['nama' => 'Fiqh', 'kode_mapel' => 'FIQH'],
+            ['nama' => 'Tafsir Tematik', 'kode_mapel' => 'TAFSIR'],
+            ['nama' => 'Sejarah Kebudayaan Islam (SKI)', 'kode_mapel' => 'SKI'],
+            ['nama' => 'Bahasa Arab', 'kode_mapel' => 'ARAB'],
+            ['nama' => 'Nahwu', 'kode_mapel' => 'NAHWU'],
+            ['nama' => 'Tasrif', 'kode_mapel' => 'TASRIF'],
+            ['nama' => 'Khot Imla', 'kode_mapel' => 'KHOT'],
+            ['nama' => 'Pendidikan Pancasila dan Kewarganegaraan', 'kode_mapel' => 'PPKN'],
             ['nama' => 'Bahasa Indonesia', 'kode_mapel' => 'INDO'],
+            ['nama' => 'Matematika', 'kode_mapel' => 'MATH'],
+            ['nama' => 'Ilmu Pengetahuan Alam (IPA)', 'kode_mapel' => 'IPA'],
+            ['nama' => 'Ilmu Pengetahuan Sosial (IPS)', 'kode_mapel' => 'IPS'],
             ['nama' => 'Bahasa Inggris', 'kode_mapel' => 'ENG'],
-            ['nama' => 'IPA', 'kode_mapel' => 'SCI'],
-            ['nama' => 'IPS', 'kode_mapel' => 'SOC'],
-            ['nama' => 'Pendidikan Agama', 'kode_mapel' => 'REL'],
-            ['nama' => 'Pendidikan Kewarganegaraan', 'kode_mapel' => 'CIV'],
-            ['nama' => 'Seni Budaya', 'kode_mapel' => 'ART'],
-            ['nama' => 'Pendidikan Jasmani', 'kode_mapel' => 'PE'],
-            ['nama' => 'Teknologi Informasi', 'kode_mapel' => 'IT'],
+            ['nama' => 'Informatika', 'kode_mapel' => 'IT'],
         ];
 
         DB::table('mapel')->insert($mapels);
     }
+
 }

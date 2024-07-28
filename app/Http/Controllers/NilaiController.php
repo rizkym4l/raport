@@ -21,46 +21,32 @@ class NilaiController extends Controller
         $user = Auth::user()->id;
         $siswa = Siswa::where('akun_id', $user)->with('kelas')->first();
 
-        $uniqueMapelIds = Nilai::where('tingkat', $tingkat)
-            ->where('semester', $semester)
-            ->where('nis_siswa', $siswa->nis)
-            ->distinct()
-            ->pluck('mapel_id');
+        $allMapels = Mapel::orderBy('id')->get();
 
         $data = [];
 
-        foreach ($uniqueMapelIds as $mapelId) {
+        foreach ($allMapels as $mapel) {
             $nilaiData = Nilai::where('tingkat', $tingkat)
                 ->where('semester', $semester)
                 ->where('nis_siswa', $siswa->nis)
-                ->where('mapel_id', $mapelId)
+                ->where('mapel_id', $mapel->id)
                 ->get();
 
             $mapelData = [
-                'mapel_id' => Mapel::where('id', $mapelId)->pluck('nama')[0],
-                'sumatif1' => null,
-                'sumatif2' => null,
-                'sumatif3' => null,
-                'formatif1' => null,
-                'formatif2' => null,
-                'formatif3' => null,
-                'sumatiftengahsemester' => null
+                'mapel_id' => $mapel->nama,
+                'sumatif 1' => null,
+                'sumatif 2' => null,
+                'formatif 1' => null,
+                'formatif 2' => null,
+                'ulangan tengah semester' => null,
+                'ulangan akhir semester' => null,
             ];
-
-            $nilaiCount = 0;
-            $totalNilai = 0;
 
             foreach ($nilaiData as $nilai) {
                 $mapelData[$nilai->nama] = $nilai->nilai;
-                $totalNilai += $nilai->nilai;
-                $nilaiCount++;
                 if ($nilai->keterangan) {
                     $mapelData['keterangan'] = $nilai->keterangan;
                 }
-            }
-
-            if ($nilaiCount > 0) {
-                $mapelData['rata_rata'] = $totalNilai / $nilaiCount;
             }
 
             $data[] = $mapelData;
@@ -91,6 +77,7 @@ class NilaiController extends Controller
         $class = Kelas::find($kelas);
         $Mapel = Mapel::find($mapel);
         $nilai1 = $nilai;
+
         switch ($nilai1) {
             case 1:
                 $nilai = 'sumatif 1';
@@ -99,24 +86,25 @@ class NilaiController extends Controller
                 $nilai = 'sumatif 2';
                 break;
             case 3:
-                $nilai = 'sumatif 3';
-                break;
-            case 4:
                 $nilai = 'formatif 1';
                 break;
-            case 5:
+            case 4:
                 $nilai = 'formatif 2';
                 break;
-            case 6:
-                $nilai = 'formatif 3';
+            case 5:
+                $nilai = 'ulangan tengah semester';
                 break;
-            case 7:
-                $nilai = 'sumatif tengah semester';
+            case 6:
+                $nilai = 'ulangan akhir semester';
+                break;
+            default:
+                $nilai = null;
                 break;
         }
 
         return view('guru.dashboard', compact('tingkat', 'Mapel', 'class', 'kelas', 'mapel', 'semester', 'nilai', 'nilai1'));
     }
+
 
 
 

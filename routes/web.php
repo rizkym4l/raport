@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GuruController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\ProfileController;
@@ -50,6 +51,7 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('checkRole:guru')->group(function () {
         Route::post('/nilai/import/', [NilaiController::class, 'import'])->name('nilai.import');
+        Route::get('/index', [GuruController::class, 'index'])->name('guru.index');
         Route::get('/nilai/export', [NilaiController::class, 'export'])->name('nilai.export');
         Route::post('/nilai/store', [NilaiController::class, 'store'])->name('nilai.store');
         Route::get('/tingkatan', [TingkatanController::class, 'index'])->name('tingkatan');

@@ -28,15 +28,22 @@ return new class extends Migration {
         });
         Schema::create('nilai', function (Blueprint $table) {
             $table->id();
-            $table->enum('nama', ['sumatif1', 'sumatif2', 'sumatif3', 'formatif1', 'formatif2', 'formatif3', 'sumatiftengahsemester']);
+            $table->enum('nama', [
+                'sumatif 1',
+                'sumatif 2',
+                'formatif 1',
+                'formatif 2',
+                'ulangan tengah semester',
+                'ulangan akhir semester'
+            ]);
             $table->string('keterangan', 100);
             $table->integer('tingkat');
             $table->integer('semester');
             $table->unsignedBigInteger('mapel_id');
 
             $table->foreign('mapel_id')->references('id')->on('mapel');
-
         });
+
     }
 
     /**

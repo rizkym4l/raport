@@ -55,29 +55,34 @@
                 <table class="min-w-full bg-white shadow-md rounded-lg">
                     <thead>
                         <tr>
+                            <th class="py-2 px-4 bg-blue-500 text-white border-b border-blue-600">No</th>
                             <th class="py-2 px-4 bg-blue-500 text-white border-b border-blue-600">Mapel</th>
                             <th class="py-2 px-4 bg-blue-500 text-white border-b border-blue-600">Formatif 1</th>
                             <th class="py-2 px-4 bg-blue-500 text-white border-b border-blue-600">Formatif 2</th>
-                            <th class="py-2 px-4 bg-blue-500 text-white border-b border-blue-600">Formatif 3</th>
                             <th class="py-2 px-4 bg-blue-500 text-white border-b border-blue-600">Sumatif 1</th>
                             <th class="py-2 px-4 bg-blue-500 text-white border-b border-blue-600">Sumatif 2</th>
-                            <th class="py-2 px-4 bg-blue-500 text-white border-b border-blue-600">Sumatif 3</th>
-                            <th class="py-2 px-4 bg-blue-500 text-white border-b border-blue-600">Sumatif Tengah Semester
+                            <th class="py-2 px-4 bg-blue-500 text-white border-b border-blue-600">Ulangan Tengah Semester
+                            </th>
+                            <th class="py-2 px-4 bg-blue-500 text-white border-b border-blue-600">Ulangan Akhir Semester
                             </th>
                         </tr>
                     </thead>
                     <tbody>
+
                         @foreach ($data as $mapelData)
                             <tr class="hover:bg-blue-100 text-center">
-                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['mapel_id'] ?? '-' }}</td>
-                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['formatif1'] ?? '-' }}</td>
-                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['formatif2'] ?? '-' }}</td>
-                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['formatif3'] ?? '-' }}</td>
-                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['sumatif1'] ?? '-' }}</td>
-                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['sumatif2'] ?? '-' }}</td>
-                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['sumatif3'] ?? '-' }}</td>
+                                <td class="py-2 px-4 border-b border-gray-200 ">{{ $loop->iteration }}</td>
+
+                                <td class="py-2 px-4 border-b border-gray-200 text-left">
+                                    {{ $mapelData['mapel_id'] ?? '-' }}</td>
+                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['formatif 1'] ?? '-' }}</td>
+                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['formatif 2'] ?? '-' }}</td>
+                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['sumatif 1'] ?? '-' }}</td>
+                                <td class="py-2 px-4 border-b border-gray-200">{{ $mapelData['sumatif 2'] ?? '-' }}</td>
                                 <td class="py-2 px-4 border-b border-gray-200">
-                                    {{ $mapelData['sumatiftengahsemester'] ?? '-' }}</td>
+                                    {{ $mapelData['ulangantengahsemester'] ?? '-' }}</td>
+                                <td class="py-2 px-4 border-b border-gray-200">
+                                    {{ $mapelData['ulanganakhirsemester'] ?? '-' }}</td>
                             </tr>
                         @endforeach
                     </tbody>

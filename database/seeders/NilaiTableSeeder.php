@@ -18,7 +18,7 @@ class NilaiTableSeeder extends Seeder
 
         foreach ($mapel as $mapelData) {
             DB::table('nilai')->insert([
-                'nama' => 'sumatif1',
+                'nama' => 'sumatif 1',
                 'keterangan' => '',
                 'tingkat' => 1,
                 'semester' => $semester,

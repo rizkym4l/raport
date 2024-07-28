@@ -27,7 +27,7 @@
         <div class="mt-10 bg-white p-6 rounded-lg shadow-lg overflow-x-auto">
             <table class="table-auto w-full text-left bg-white text-gray-800">
                 <thead>
-                    <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                    <tr class="bg-blue-200 text-gray-600 uppercase text-sm leading-normal">
                         <th class="py-3 px-6 whitespace-nowrap">Tingkat</th>
                         <th class="py-3 px-6 whitespace-nowrap">Semester 1</th>
                         <th class="py-3 px-6 whitespace-nowrap">Semester 2</th>

@@ -32,8 +32,7 @@ class NilaiImport implements ToArray
                 throw new Exception('Baris data tidak lengkap: ' . json_encode($row));
             }
 
-            // dd($this->data);
-            // die();
+
 
             $siswa = Siswa::where('nis', $row[0])->first();
             if (!$siswa) {
@@ -46,14 +45,12 @@ class NilaiImport implements ToArray
             }
 
             $nilaiTypes = [
-                1 => 'sumatif1',
-                2 => 'sumatif2',
-                3 => 'sumatif3',
-                4 => 'formatif1',
-                5 => 'formatif2',
-                6 => 'formatif3',
-                7 => 'sumatiftengahsemester',
-
+                1 => 'sumatif 1',
+                2 => 'sumatif 2',
+                3 => 'formatif 1',
+                4 => 'formatif 2',
+                5 => 'ulangan tengah semester',
+                6 => 'ulangan akhir semester',
             ];
 
             if (array_key_exists($this->data['nilai'], $nilaiTypes)) {
