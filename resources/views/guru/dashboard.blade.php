@@ -21,7 +21,7 @@
             @endif
 
             <h2 class="text-2xl font-semibold mb-2 mt-5">Input Nilai Siswa</h2>
-            <p class="mb-6">Silahkan Unduh Template <a href="{{ route('nilai.export') }}"
+            <p class="mb-6">Silahkan Unduh Template <a href="{{ route('nilai.export', ['tingkat' => $tingkat, 'kelas' => $kelas, 'mapel' => $mapel, 'semester' => $semester, 'nilai' => $nilai1] ) }}"
                     class="text-blue-600 underline">Di
                     Sini</a></p>
 

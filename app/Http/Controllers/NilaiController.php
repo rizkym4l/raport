@@ -84,7 +84,7 @@ class NilaiController extends Controller
                 break;
             case 2:
                 $nilai = 'sumatif 2';
-                break;
+            break;
             case 3:
                 $nilai = 'formatif 1';
                 break;
@@ -147,8 +147,14 @@ class NilaiController extends Controller
         }
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        return Excel::download(new NilaiExport, 'NilaiTemplate.xlsx');
+        $data = $request->only(['tingkat', 'kelas', 'mapel', 'semester', 'nilai']);
+
+        if (!isset($data['kelas'])) {
+            return redirect()->back()->with('error', 'Kelas tidak ditemukan dalam request.');
+        }
+    
+        return Excel::download(new NilaiExport($data), 'NilaiTemplate.xlsx');
     }
 }
