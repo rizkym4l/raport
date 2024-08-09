@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kelas;
 use Exception;
+use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Nilai;
 use App\Models\Siswa;
+
+use App\Models\NilaiSiswa;
 use App\Models\TahunAjaran;
 use App\Exports\NilaiExport;
 use App\Imports\NilaiImport;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+
+
+
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -18,15 +24,22 @@ class NilaiController extends Controller
 {
     public function index($tingkat, $semester)
     {
+        $sap = Nilai::select('name', 'id')->get();
         $user = Auth::user()->id;
         $siswa = Siswa::where('akun_id', $user)->with('kelas')->first();
-
         $allMapels = Mapel::orderBy('id')->get();
 
         $data = [];
+        $header = ['NO', 'Mata Pelajaran'];
+
+        foreach ($sap as $n) {
+            $header[] = $n->name;
+        }
+        $header[] = 'Keterangan';
+        $data[] = $header;
 
         foreach ($allMapels as $mapel) {
-            $nilaiData = Nilai::where('tingkat', $tingkat)
+            $nilaiData = NilaiSiswa::where('tingkat', $tingkat)
                 ->where('semester', $semester)
                 ->where('nis_siswa', $siswa->nis)
                 ->where('mapel_id', $mapel->id)
@@ -34,16 +47,15 @@ class NilaiController extends Controller
 
             $mapelData = [
                 'mapel_id' => $mapel->nama,
-                'sumatif 1' => null,
-                'sumatif 2' => null,
-                'formatif 1' => null,
-                'formatif 2' => null,
-                'ulangan tengah semester' => null,
-                'ulangan akhir semester' => null,
             ];
 
+            foreach ($sap as $n) {
+                $mapelData[$n->name] = null;
+            }
+
             foreach ($nilaiData as $nilai) {
-                $mapelData[$nilai->nama] = $nilai->nilai;
+                $nilaiName = $sap->firstWhere('id', $nilai->nilai_id)->name;
+                $mapelData[$nilaiName] = $nilai->nilai;
                 if ($nilai->keterangan) {
                     $mapelData['keterangan'] = $nilai->keterangan;
                 }
@@ -52,10 +64,16 @@ class NilaiController extends Controller
             $data[] = $mapelData;
         }
 
+        // dd($data);
+
+        // die();
         return view('nilaisiswa', [
             'data' => $data,
             'siswa' => $siswa,
-            'nama_kelas' => $siswa->kelas->nama_kelas
+            'sap' => $sap,
+            'nama_kelas' => $siswa->kelas->nama_kelas,
+            'semester' => $semester,
+            'tingkat' => $tingkat
         ]);
     }
 
@@ -66,10 +84,68 @@ class NilaiController extends Controller
         return view('semester', ['tingkat' => $tingkat, 'kelas' => $kelas, 'mapel' => $mapel]);
 
     }
+
+
+    public function cetak($nis, $semster, $tingkat)
+    {
+        $siswa = Siswa::where('nis', $nis)->with('kelas')->first();
+        $sap = Nilai::select('name', 'id')->get();
+        $allMapels = Mapel::orderBy('id')->get();
+
+
+        $data = [];
+        $header = ['NO', 'Mata Pelajaran'];
+
+        foreach ($sap as $n) {
+            $header[] = $n->name;
+        }
+        $header[] = 'Keterangan';
+        $data[] = $header;
+
+        foreach ($allMapels as $mapel) {
+            $nilaiData = NilaiSiswa::where('semester', $semester)
+                ->where('tingkat', $tingkat)
+                ->where('nis_siswa', $siswa->nis)
+                ->where('mapel_id', $mapel->id)
+                ->get();
+
+            $mapelData = [
+                'mapel_id' => $mapel->nama,
+            ];
+
+            foreach ($sap as $n) {
+                $mapelData[$n->name] = null;
+            }
+
+            foreach ($nilaiData as $nilai) {
+                $nilaiName = $sap->firstWhere('id', $nilai->nilai_id)->name;
+                $mapelData[$nilaiName] = $nilai->nilai;
+                if ($nilai->keterangan) {
+                    $mapelData['keterangan'] = $nilai->keterangan;
+                }
+            }
+
+            $data[] = $mapelData;
+        }
+        dd($tingkat);
+
+        $pdf = Pdf::loadView('cetak_nilai', [
+            'data' => $data,
+            'siswa' => $siswa,
+            'sap' => $sap,
+            'nama_kelas' => $siswa->kelas->nama_kelas,
+            'semester' => $semester,
+        ]);
+
+        return $pdf->download('nilai_siswa_' . $siswa->nis . '.pdf');
+    }
+
     public function nilai($tingkat, $kelas, $mapel, $semester)
     {
-
-        return view('nilai', ['tingkat' => $tingkat, 'kelas' => $kelas, 'mapel' => $mapel, 'semester' => $semester]);
+        $nilai = Nilai::select('name', 'id')->get();
+        // dd($nilai);
+        // die();
+        return view('nilai', ['tingkat' => $tingkat, 'kelas' => $kelas, 'mapel' => $mapel, 'semester' => $semester, 'data' => $nilai]);
 
     }
     public function create($tingkat, $kelas, $mapel, $semester, $nilai)
@@ -84,7 +160,7 @@ class NilaiController extends Controller
                 break;
             case 2:
                 $nilai = 'sumatif 2';
-            break;
+                break;
             case 3:
                 $nilai = 'formatif 1';
                 break;
@@ -154,7 +230,7 @@ class NilaiController extends Controller
         if (!isset($data['kelas'])) {
             return redirect()->back()->with('error', 'Kelas tidak ditemukan dalam request.');
         }
-    
+
         return Excel::download(new NilaiExport($data), 'NilaiTemplate.xlsx');
     }
 }

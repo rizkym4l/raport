@@ -21,7 +21,7 @@ class NilaiExport implements FromCollection, WithHeadings, ShouldAutoSize
     }
     public function collection()
     {
-        return Siswa::select('nis')->where('kelas_id', $this->data['kelas'])->get();
+        return '';
     }
 
     public function headings(): array

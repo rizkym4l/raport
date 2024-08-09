@@ -4,6 +4,7 @@ namespace App\Imports;
 use App\Models\Nilai;
 use App\Models\Siswa;
 use App\Models\Mapel;
+use App\Models\NilaiSiswa;
 use App\Models\TahunAjaran;
 use Maatwebsite\Excel\Concerns\ToArray;
 use Exception;
@@ -25,6 +26,9 @@ class NilaiImport implements ToArray
      */
     public function array(array $rows)
     {
+
+        // dd($this->data);
+        // die();
         $header = array_shift($rows);
 
         foreach ($rows as $row) {
@@ -44,19 +48,12 @@ class NilaiImport implements ToArray
                 throw new Exception('Tahun ajaran tidak tersedia: ' . $row[3]);
             }
 
-            $nilaiTypes = [
-                1 => 'sumatif 1',
-                2 => 'sumatif 2',
-                3 => 'formatif 1',
-                4 => 'formatif 2',
-                5 => 'ulangan tengah semester',
-                6 => 'ulangan akhir semester',
-            ];
 
-            if (array_key_exists($this->data['nilai'], $nilaiTypes)) {
-                $nilaiName = $nilaiTypes[$this->data['nilai']];
-                Nilai::create([
-                    'nama' => $nilaiName,
+
+            if (($this->data['nilai'])) {
+
+                NilaiSiswa::create([
+                    'nilai_id' => $this->data['nilai'],
                     'keterangan' => $row[1],
                     'tingkat' => $this->data['tingkat'],
                     'semester' => $this->data['semester'],

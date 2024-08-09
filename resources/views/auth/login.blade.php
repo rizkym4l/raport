@@ -13,8 +13,14 @@
 </head>
 
 <body class="bg-slate-100 font-[Poppins]">
-    <div class="relative flex flex-col justify-center items-center min-h-screen">
-        <div class="w-full p-8 bg-white rounded-lg shadow-lg border border-gray-200 lg:max-w-md">
+    <div class="relative flex flex-col justify-center items-center min-h-screen bg-cover bg-center"
+        style="background-image: url('https://hargabiayaku.id/wp-content/uploads/2023/06/smait-al-kahfi-1024x679.png');">
+        <div class="absolute inset-0 bg-blue-900 opacity-50"></div>
+        <div class="relative w-full p-8 bg-white rounded-lg shadow-lg border border-gray-200 lg:max-w-md">
+            <div class="flex justify-center mb-6">
+                <img src="https://tse2.mm.bing.net/th?id=OIP.jBwefGdT24xikvtdnbmxkQHaHZ&pid=Api&P=0&h=180"
+                    alt="Logo" class="w-16 h-16">
+            </div>
             <h1 class="text-3xl font-semibold text-center text-gray-700 mb-6">Login</h1>
             <form action="{{ route('login.action') }}" method="POST" class="space-y-6">
                 @csrf

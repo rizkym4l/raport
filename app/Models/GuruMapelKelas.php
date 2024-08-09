@@ -5,10 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Nilai extends Model
+class GuruMapelKelas extends Model
 {
     use HasFactory;
-
-    protected $table = 'nilai';
-    protected $fillable = ['nama', 'kkm'];
+    protected $table = 'guru_kelas_mapel';
 }

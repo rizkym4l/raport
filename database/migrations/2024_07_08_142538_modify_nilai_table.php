@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::table('nilai', function (Blueprint $table) {
+        Schema::table('nilai_siswa', function (Blueprint $table) {
             $table->unsignedBigInteger('tahun_ajaran_id')->nullable()->after('mapel_id');
             $table->float('nilai')->nullable()->after('semester');
             $table->string('nis_siswa');

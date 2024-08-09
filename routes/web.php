@@ -30,12 +30,7 @@ Route::middleware('guest')->controller(AuthController::class)->group(function ()
 
 Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-
-
-
-
-
-
+    Route::get('/siswa/cetak-nilai/{nis}', [NilaiController::class, 'cetak'])->name('siswa.cetak-nilai');
     Route::post('/profile/upload', [ProfileController::class, 'uploadImage'])->name('profile.upload');
     Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
     Route::get('/error', function () {
@@ -48,9 +43,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/nilai/siswa/{tingkat}/{semester}', [NilaiController::class, 'index']);
 
     });
+    Route::get('/etdah', function () {
+        return view('test');
+    });
 
     Route::middleware('checkRole:guru')->group(function () {
         Route::post('/nilai/import/', [NilaiController::class, 'import'])->name('nilai.import');
+        Route::get('/perbaikan', [GuruController::class, 'perbaikan'])->name('perbaikan');
         Route::get('/index', [GuruController::class, 'index'])->name('guru.index');
         Route::get('/nilai/export', [NilaiController::class, 'export'])->name('nilai.export');
         Route::post('/nilai/store', [NilaiController::class, 'store'])->name('nilai.store');

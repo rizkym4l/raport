@@ -26,23 +26,28 @@ return new class extends Migration {
             $table->string('kode_mapel');
 
         });
+
         Schema::create('nilai', function (Blueprint $table) {
             $table->id();
-            $table->enum('nama', [
-                'sumatif 1',
-                'sumatif 2',
-                'formatif 1',
-                'formatif 2',
-                'ulangan tengah semester',
-                'ulangan akhir semester'
-            ]);
+            $table->string('name');
+            $table->integer('kkm');
+
+        });
+
+        Schema::create('nilai_siswa', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger(
+                'nilai_id'
+            );
             $table->string('keterangan', 100);
             $table->integer('tingkat');
             $table->integer('semester');
             $table->unsignedBigInteger('mapel_id');
 
             $table->foreign('mapel_id')->references('id')->on('mapel');
+            $table->foreign('nilai_id')->references('id')->on('nilai');
         });
+
 
     }
 

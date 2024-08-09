@@ -8,6 +8,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>@yield('title', 'Dashboard')</title>
+    <style>
+        * {
+            scroll-behavior: smooth
+        }
+    </style>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     @vite('resources/css/app.css')
     <script>
@@ -64,17 +69,26 @@
     </style>
 </head>
 
-<body class="bg-slate-100 h-full font-[Poppins]">
+<body class=" h-full font-[Poppins]">
     <div class="drawer drawer-mobile h-full">
         <input id="my-drawer" type="checkbox" class="drawer-toggle" />
         <div class="drawer-content flex flex-col h-full">
             <nav class="bg-white shadow-2xl border-b-2 border-slate-200 py-4 px-6 flex justify-between items-center">
-                <div class="flex items-center">
+                @if (Auth::user()->role == 'guru')
+                    <a href={{ route('dashboard') }}>
+                    @else
+                        <a href={{ route('dashboard') }}>
+                @endif
+
+                <div id="logo" class="flex items-center">
                     <img src="https://tse2.mm.bing.net/th?id=OIP.jBwefGdT24xikvtdnbmxkQHaHZ&pid=Api&P=0&h=180"
                         alt="Logo" class="w-10 h-10 mx-2">
                     <span class="ml-2 text-lg font-semibold text-gray-700">Eraport</span>
                 </div>
+                </a>
+
                 <div class="flex items-center space-x-4 ">
+
                     <span id="current-time" class="text-gray-600 hidden sm:block"></span>
                     @auth
                         <div class="relative dropdown">
@@ -97,7 +111,7 @@
                 </div>
             </nav>
 
-            <div class="sm:p-6 flex-grow bg-slate-100">
+            <div class="sm:p-6 flex-grow bg-gradient-to-b from-slate-100 to-slate-50">
                 @yield('contents')
             </div>
         </div>
@@ -113,7 +127,6 @@
         </div>
     </div>
 
-    <!-- Upload Image Modal -->
     <div id="upload-image-modal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-lg p-6 shadow-lg">
             <h2 class="text-lg font-semibold mb-4">Upload Image</h2>

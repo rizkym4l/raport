@@ -30,9 +30,9 @@ class AuthController extends Controller
         // Validator::make($request->all(), [
         //     'email' => 'required|email',
         //     'password' => 'required'
-            
+
         // ])->validate();
-    
+
         // // Coba otentikasi pengguna
         // if (!Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
         //     throw ValidationException::withMessages(['email' => trans('auth.failed')]);
@@ -47,16 +47,16 @@ class AuthController extends Controller
         if (Auth::attempt($user)) {
             $user = Auth::user();
 
-            if ($user->role == 'guru'){
-                return redirect()->route('tingkatan');
-            } elseif($user->role == 'siswa'){
+            if ($user->role == 'guru') {
+                return redirect()->route('guru.index');
+            } elseif ($user->role == 'siswa') {
                 return redirect()->route('dashboard');
             }
         }
-        
+
 
     }
-    
+
     public function logout(Request $request)
     {
         Auth::guard('web')->logout();
