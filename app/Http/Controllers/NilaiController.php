@@ -86,8 +86,10 @@ class NilaiController extends Controller
     }
 
 
-    public function cetak($nis, $semster, $tingkat)
+    public function cetak($nis)
     {
+        $semester = request()->input('semester');
+        $tingkat = request()->input('tingkat');
         $siswa = Siswa::where('nis', $nis)->with('kelas')->first();
         $sap = Nilai::select('name', 'id')->get();
         $allMapels = Mapel::orderBy('id')->get();
@@ -127,7 +129,7 @@ class NilaiController extends Controller
 
             $data[] = $mapelData;
         }
-        dd($tingkat);
+        // dd($tingkat);
 
         $pdf = Pdf::loadView('cetak_nilai', [
             'data' => $data,
@@ -233,4 +235,34 @@ class NilaiController extends Controller
 
         return Excel::download(new NilaiExport($data), 'NilaiTemplate.xlsx');
     }
+    public function edit($id)
+    {
+        $nilai = NilaiSiswa::findOrFail($id);
+        $mapel = Mapel::all();
+        return view('guru.edit_nilai', compact('nilai', 'mapel'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nilai' => 'required|numeric',
+            // 'keterangan' => 'nullable|string',
+        ]);
+
+        $nilai = NilaiSiswa::findOrFail($id);
+        $nilai->nilai = $request->input('nilai');
+        // $nilai->keterangan = $request->input('keterangan');
+        $nilai->save();
+
+        return redirect()->route('guru.tampilkan_nilai', $nilai->nis_siswa)->with('success', 'Nilai berhasil diperbarui');
+    }
+
+    public function destroy($id)
+    {
+        $nilai = NilaiSiswa::findOrFail($id);
+        $nilai->delete();
+
+        return redirect()->route('guru.tampilkan_nilai', $nilai->nis_siswa)->with('success', 'Nilai berhasil dihapus');
+    }
+
 }

@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('photo', 255)->nullable();
 
             $table->foreign('akun_id')->references('id')->on('users');
+
             $table->timestamps();
         });
     }

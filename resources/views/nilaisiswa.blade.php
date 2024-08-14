@@ -56,8 +56,8 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="py-2 px-4 text-gray-700">{{ $siswa->sikap_spiritual_predikat }}</td>
-                                    <td class="py-2 px-4 text-gray-700">{{ $siswa->sikap_spiritual_keterangan }}</td>
+                                    <td class="py-2 px-4 text-gray-700">C</td>
+                                    <td class="py-2 px-4 text-gray-700">Pusing...</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -103,24 +103,24 @@
                         </div>
                     </div>
                 @else
-                    <table class="min-w-full bg-white shadow-xl  rounded-lg">
-                        <thead class="bg-gray-200">
+                    <table class="min-w-full bg-white shadow-xl text-black border-black  rounded-lg">
+                        <thead class="bg-blue-100">
                             <tr>
                                 @foreach ($data[0] as $header)
                                     <th class="text-left py-2 px-4">{{ $header }}</th>
                                 @endforeach
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="">
                             @foreach ($data as $key => $row)
                                 @if ($key > 0)
                                     <tr class="hover:bg-gray-100">
-                                        <td class="text-center py-2 px-4">{{ $key }}</td>
-                                        <td class="py-2 px-4">{{ $row['mapel_id'] }}</td>
+                                        <td class="text-center py-2 px-4 border-y-2">{{ $key }}.</td>
+                                        <td class="py-2 px-4 border-y-2">{{ $row['mapel_id'] }}</td>
                                         @foreach ($sap as $n)
-                                            <td class="py-2 px-4">{{ $row[$n->name] ?? '-' }}</td>
+                                            <td class="py-2 px-4 border-y-2">{{ $row[$n->name] ?? '-' }}</td>
                                         @endforeach
-                                        <td class="py-2 px-4">{{ $row['keterangan'] ?? '' }}</td>
+                                        <td class="py-2 px-4 border-y-2">{{ $row['keterangan'] ?? '' }}</td>
                                     </tr>
                                 @endif
                             @endforeach
@@ -130,7 +130,8 @@
             </div>
 
             <div class="flex justify-end mt-4">
-                <a href="{{ route('siswa.cetak-nilai', [$siswa->nis, $semester, $tingkat]) }}" target="_blank"
+                <a href="{{ route('siswa.cetak-nilai', $siswa->nis) }}?semester={{ $semester }}&tingkat={{ $tingkat }}"
+                    target="_blank"
                     class="btn bg-green-500 text-white border-green-600 border-2 hover:bg-green-600 hover:border-green-700">
                     Cetak Nilai
                 </a>

@@ -49,7 +49,13 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('checkRole:guru')->group(function () {
         Route::post('/nilai/import/', [NilaiController::class, 'import'])->name('nilai.import');
-        Route::get('/perbaikan', [GuruController::class, 'perbaikan'])->name('perbaikan');
+        Route::get('/nilai/{siswa_id}', [NilaiController::class, 'index'])->name('nilai.index');
+        Route::get('/nilai/{id}/edit', [NilaiController::class, 'edit'])->name('nilai.edit');
+        Route::put('/nilai/{id}', [NilaiController::class, 'update'])->name('nilai.update');
+        Route::delete('/nilai/{id}', [NilaiController::class, 'destroy'])->name('nilai.destroy');
+        Route::get('/perbaikan', [GuruController::class, 'pilihkelas'])->name('perbaikan');
+        Route::get('guru/kelas/{kelas_id}', [GuruController::class, 'pilihsiswa'])->name('guru.showStudents');
+        Route::get('guru/siswa/{nis}', [GuruController::class, 'tampilkanNilai'])->name('guru.tampilkan_nilai');
         Route::get('/index', [GuruController::class, 'index'])->name('guru.index');
         Route::get('/nilai/export', [NilaiController::class, 'export'])->name('nilai.export');
         Route::post('/nilai/store', [NilaiController::class, 'store'])->name('nilai.store');

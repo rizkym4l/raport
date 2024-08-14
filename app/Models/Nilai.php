@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\NilaiSiswa;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Nilai extends Model
 {
@@ -11,4 +12,8 @@ class Nilai extends Model
 
     protected $table = 'nilai';
     protected $fillable = ['nama', 'kkm'];
+    public function nilaiSiswa()
+    {
+        return $this->hasMany(NilaiSiswa::class, 'nilai_id');
+    }
 }

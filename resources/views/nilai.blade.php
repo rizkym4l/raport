@@ -1,11 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Pilih Kelas')
+@section('title', 'Pilih Nilai')
 
 @section('contents')
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-4xl font-bold text-center mb-8 text-blue-600">Pilih Nilai</h1>
-
+        <div class="flex items-center mb-8">
+            <button onclick="window.history.back()"
+                class="btn bg-blue-500 text-white mx-2 sm:mx-0 border-blue-600 border-2 hover:bg-blue-600 hover:border-blue-700 mr-auto">Kembali</button>
+        </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             @foreach ($data as $i)
@@ -18,7 +21,6 @@
                     <h2 class="text-2xl font-semibold text-center text-gray-800">{{ $i->name }}</h2>
                 </a>
             @endforeach
-
         </div>
     </div>
 @endsection

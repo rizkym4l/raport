@@ -75,7 +75,7 @@
         <div class="drawer-content flex flex-col h-full">
             <nav class="bg-white shadow-2xl border-b-2 border-slate-200 py-4 px-6 flex justify-between items-center">
                 @if (Auth::user()->role == 'guru')
-                    <a href={{ route('dashboard') }}>
+                    <a href={{ route('guru.index') }}>
                     @else
                         <a href={{ route('dashboard') }}>
                 @endif

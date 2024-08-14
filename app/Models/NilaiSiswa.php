@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Mapel;
+use App\Models\Nilai;
+use App\Models\Siswa;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class NilaiSiswa extends Model
 {
@@ -22,18 +25,23 @@ class NilaiSiswa extends Model
         'nis_siswa',
     ];
 
-    public function siswa()
+    public function nilai()
     {
-        return $this->belongsTo(Siswa::class);
+        return $this->belongsTo(Nilai::class, 'nilai_id');
     }
 
     public function mapel()
     {
-        return $this->belongsTo(Mapel::class);
+        return $this->belongsTo(Mapel::class, 'mapel_id');
+    }
+
+    public function siswa()
+    {
+        return $this->belongsTo(Siswa::class, 'nis_siswa');
     }
 
     public function tahunAjaran()
     {
-        return $this->belongsTo(TahunAjaran::class);
+        return $this->belongsTo(TahunAjaran::class, 'tahun_ajaran_id');
     }
 }
