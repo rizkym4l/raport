@@ -26,9 +26,6 @@ class NilaiImport implements ToArray
      */
     public function array(array $rows)
     {
-
-        // dd($this->data);
-        // die();
         $header = array_shift($rows);
 
         foreach ($rows as $row) {
@@ -36,11 +33,9 @@ class NilaiImport implements ToArray
                 throw new Exception('Baris data tidak lengkap: ' . json_encode($row));
             }
 
-
-
             $siswa = Siswa::where('nis', $row[0])->first();
             if (!$siswa) {
-                throw new Exception('nis tidak tersedia: ' . $row[0]);
+                throw new Exception('NIS tidak tersedia: ' . $row[0]);
             }
 
             $tahunAjaran = TahunAjaran::where('tahun', $row[3])->first();
@@ -48,10 +43,21 @@ class NilaiImport implements ToArray
                 throw new Exception('Tahun ajaran tidak tersedia: ' . $row[3]);
             }
 
+            $existingNilai = NilaiSiswa::where('nis_siswa', $siswa->nis)
+                ->where('mapel_id', $this->data['mapel'])
+                ->where('nilai_id', $this->data['nilai'])
+                ->first();
 
+            // dd($existingNilai);
+            // die();
+            $mapel = Mapel::where('id', $existingNilai->mapel_id)->first();
+            $name = Nilai::where('id', $existingNilai->nilai_id)->first();
+
+            if ($existingNilai) {
+                throw new Exception('Nilai "' . $name['name'] . 'untuk mapel' . $mapel['nama'] . '" dari murid dengan NIS ' . $siswa->nis . ' telah terisi. Jika ingin mengubah atau menghapus nilai, silahkan beralih ke fitur perbaikan nilai.');
+            }
 
             if (($this->data['nilai'])) {
-
                 NilaiSiswa::create([
                     'nilai_id' => $this->data['nilai'],
                     'keterangan' => $row[1],
@@ -67,4 +73,5 @@ class NilaiImport implements ToArray
             }
         }
     }
+
 }

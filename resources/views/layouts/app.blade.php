@@ -114,59 +114,62 @@
             <div class="sm:p-6 flex-grow bg-gradient-to-b from-slate-100 to-slate-50">
                 @yield('contents')
             </div>
-        </div>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class=" bg-slate-50">
+                <path fill="#0099ff" fill-opacity="1"
+                    d="M0,160L120,176C240,192,480,224,720,224C960,224,1200,192,1320,176L1440,160L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z">
+                </path>
+            </svg>
+            <footer class=" bg-[#0099ff] text-white py-6 ">
+                <div class="container mx-auto text-center">
+                    <p>&copy; 2024 Al Kahfi. All rights reserved.</p>
 
-        <div class="drawer-side">
-            <label for="my-drawer" class="drawer-overlay"></label>
-            <ul class="menu bg-gray-800 text-white w-80 p-4 space-y-2 h-full">
-                <li><a href="#" class="hover:bg-gray-700 p-2 rounded-md">Dashboard</a></li>
-                <li><a href="#" class="hover:bg-gray-700 p-2 rounded-md">Profile</a></li>
-                <li><a href="#" class="hover:bg-gray-700 p-2 rounded-md">Settings</a></li>
-                <li><a href="#" class="hover:bg-gray-700 p-2 rounded-md">Help</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <div id="upload-image-modal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-lg p-6 shadow-lg">
-            <h2 class="text-lg font-semibold mb-4">Upload Image</h2>
-            <form id="upload-image-form" action="{{ route('profile.upload') }}" method="POST"
-                enctype="multipart/form-data">
-                @csrf
-                <input type="file" name="image" accept="image/*" required>
-                <div class="flex justify-end mt-4">
-                    <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded-md mr-2"
-                        id="cancel-upload">Cancel</button>
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Upload</button>
                 </div>
-            </form>
+
+            </footer>
+
         </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var uploadButton = document.getElementById('upload-image-button');
-            var modal = document.getElementById('upload-image-modal');
-            var cancelUploadButton = document.getElementById('cancel-upload');
-            var dropdown = document.getElementsByClassName("dropdown")[0];
-            console.log(dropdown)
-            var dropdownMenu = document.getElementsByClassName("dropdown-menu")[0];
-            console.log(dropdownMenu)
 
 
-            dropdown.addEventListener('click', function() {
-                dropdownMenu.style.display = 'block'
-            })
+        <div id="upload-image-modal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-lg p-6 shadow-lg">
+                <h2 class="text-lg font-semibold mb-4">Upload Image</h2>
+                <form id="upload-image-form" action="{{ route('profile.upload') }}" method="POST"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <input type="file" name="image" accept="image/*" required>
+                    <div class="flex justify-end mt-4">
+                        <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded-md mr-2"
+                            id="cancel-upload">Cancel</button>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Upload</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-            uploadButton.addEventListener('click', function() {
-                modal.classList.remove('hidden');
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var uploadButton = document.getElementById('upload-image-button');
+                var modal = document.getElementById('upload-image-modal');
+                var cancelUploadButton = document.getElementById('cancel-upload');
+                var dropdown = document.getElementsByClassName("dropdown")[0];
+                console.log(dropdown)
+                var dropdownMenu = document.getElementsByClassName("dropdown-menu")[0];
+                console.log(dropdownMenu)
+
+
+                dropdown.addEventListener('click', function() {
+                    dropdownMenu.style.display = 'block'
+                })
+
+                uploadButton.addEventListener('click', function() {
+                    modal.classList.remove('hidden');
+                });
+
+                cancelUploadButton.addEventListener('click', function() {
+                    modal.classList.add('hidden');
+                });
             });
-
-            cancelUploadButton.addEventListener('click', function() {
-                modal.classList.add('hidden');
-            });
-        });
-    </script>
+        </script>
 </body>
 
 </html>
