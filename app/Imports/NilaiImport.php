@@ -44,16 +44,20 @@ class NilaiImport implements ToArray
             }
 
             $existingNilai = NilaiSiswa::where('nis_siswa', $siswa->nis)
+                ->where('semester', $this->data['semester'])
                 ->where('mapel_id', $this->data['mapel'])
                 ->where('nilai_id', $this->data['nilai'])
                 ->first();
 
-            // dd($existingNilai);
+            $mapel = Mapel::where('id', $this->data['mapel'])->first();
+            // if (!$mapel) {
+            //     $mapel = Mapel::where('id', $existingNilai->mapel)->first();
+            // }
+            // dd($this->data['mapel']);
             // die();
-            $mapel = Mapel::where('id', $existingNilai->mapel_id)->first();
-            $name = Nilai::where('id', $existingNilai->nilai_id)->first();
 
             if ($existingNilai) {
+                $name = Nilai::where('id', $existingNilai->nilai_id)->first();
                 throw new Exception('Nilai "' . $name['name'] . 'untuk mapel' . $mapel['nama'] . '" dari murid dengan NIS ' . $siswa->nis . ' telah terisi. Jika ingin mengubah atau menghapus nilai, silahkan beralih ke fitur perbaikan nilai.');
             }
 
