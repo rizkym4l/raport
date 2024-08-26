@@ -21,23 +21,19 @@
     <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png" />
     <link rel="icon" type="image/png" href="./assets/img/favicon.png" />
     <title>Soft UI Dashboard Tailwind</title>
+    @include('layouts.partial.link')
     @vite('resources/css/app.css')
 
-    {{-- @include('layouts.admin.link') --}}
-    <!-- Nepcha Analytics (nepcha.com) -->
-    <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
-    <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 </head>
 
 <body class="m-0 font-sans text-base antialiased font-normal leading-default bg-gray-50 text-slate-500">
-    @include('layouts.admin.header')
+    @include('layouts.partial.header')
 
 
-
-    {{-- @yield('content') --}}
-    {{-- @include('layouts.admin.footer') --}}
+    @yield('contentA')
+    @include('layouts.partial.footer')
 
 </body>
-@include('layouts.admin.script')
+@include('layouts.partial.script')
 
 </html>

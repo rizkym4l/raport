@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GuruController;
@@ -67,6 +68,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/nilai/create/{tingkat}/{kelas}/{mapel}/{semester}/{nilai}', [NilaiController::class, 'create'])->name('nilai.create');
     });
 });
+Route::middleware('checkRole:admin')->group(function () {
+    Route::get('admin/mapel', [AdminController::class, 'indexMapel'])->name('admin.mapel');
+});
+
 Route::fallback(function () {
     return redirect()->route('error');
 });
