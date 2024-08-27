@@ -77,6 +77,20 @@ class NilaiController extends Controller
         ]);
     }
 
+    public function fetchNilai(Request $request, $nis)
+    {
+        // return 'sadasd';
+        $tahunAjaranId = $request['tahun_ajaran_id'];
+        $semesterId = $request['semester_id'];
+
+        $nilaiSiswa = NilaiSiswa::where('nis_siswa', $nis)->where('tingkat', $tahunAjaranId)
+            ->where('semester', $semesterId)
+            ->get();
+
+        $nilaiSiswa->load('mapel');
+
+        return response()->json($nilaiSiswa);
+    }
 
     public function semester($tingkat, $kelas, $mapel)
     {
@@ -179,8 +193,13 @@ class NilaiController extends Controller
                 $nilai = null;
                 break;
         }
+        $siswaCollection = Siswa::where('kelas_id', $class->id)->get();
 
-        return view('guru.dashboard', compact('tingkat', 'Mapel', 'class', 'kelas', 'mapel', 'semester', 'nilai', 'nilai1'));
+
+
+
+
+        return view('guru.dashboard', compact('tingkat', 'Mapel', 'class', 'kelas', 'mapel', 'semester', 'nilai', 'nilai1', 'siswaCollection'));
     }
 
 

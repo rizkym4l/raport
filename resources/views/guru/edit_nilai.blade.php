@@ -4,6 +4,7 @@
 
 @section('contents')
     <div class="container mx-auto px-4 py-8">
+
         <h1 class="text-4xl font-bold text-center mb-4 text-blue-600 py-10">Edit Nilai</h1>
 
         <div class="bg-white p-6 rounded-lg shadow-md">

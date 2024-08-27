@@ -51,9 +51,9 @@ Route::middleware('auth')->group(function () {
     Route::middleware('checkRole:guru')->group(function () {
         Route::post('/nilai/import/', [NilaiController::class, 'import'])->name('nilai.import');
         Route::get('/nilai/{siswa_id}', [NilaiController::class, 'index'])->name('nilai.index');
-        Route::get('/nilai/{id}/edit', [NilaiController::class, 'edit'])->name('nilai.edit');
+        Route::get('/nilai/edit/{id}', [NilaiController::class, 'edit'])->name('nilai.edit');
         Route::put('/nilai/{id}', [NilaiController::class, 'update'])->name('nilai.update');
-        Route::delete('/nilai/{id}', [NilaiController::class, 'destroy'])->name('nilai.destroy');
+        Route::delete('/nilai/destroy/{id}', [NilaiController::class, 'destroy'])->name('nilai.destroy');
         Route::get('/perbaikan', [GuruController::class, 'pilihkelas'])->name('perbaikan');
         Route::get('guru/kelas/{kelas_id}', [GuruController::class, 'pilihsiswa'])->name('guru.showStudents');
         Route::get('guru/siswa/{nis}', [GuruController::class, 'tampilkanNilai'])->name('guru.tampilkan_nilai');
@@ -65,6 +65,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/mapel/{tingkatan}/{kelas}', [MapelController::class, 'index']);
         Route::get('/semester/{tingkat}/{kelas}/{mapel}', [NilaiController::class, 'semester']);
         Route::get('/nama/{tingkat}/{kelas}/{mapel}/{semester}', [NilaiController::class, 'nilai']);
+        Route::get('/fetch/nilai/{nis}', [NilaiController::class, 'fetchNilai']);
         Route::get('/nilai/create/{tingkat}/{kelas}/{mapel}/{semester}/{nilai}', [NilaiController::class, 'create'])->name('nilai.create');
     });
 });

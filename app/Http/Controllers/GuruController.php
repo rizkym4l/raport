@@ -40,6 +40,9 @@ class GuruController extends Controller
 
         $siswa = Siswa::where('nis', $siswa_id)->first();
 
+        // for ($i=0; $i < ; $i++) { 
+        //     # code...
+        // }
         $jenisNilai = [
             1 => 'Sumatif 1',
             2 => 'Sumatif 2',
@@ -52,7 +55,7 @@ class GuruController extends Controller
 
         $nilaiSiswa = $nilaiSiswa->sortBy('semester');
         $mapel = Mapel::select('nama')->where('id', $mapel_id)->first();
-
+        // dd($nilaiSiswa);
         return view('guru.tampilkan_nilai', compact('nilaiSiswa', 'siswa', 'mapel'));
     }
 

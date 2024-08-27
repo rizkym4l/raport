@@ -17,19 +17,56 @@
                 </span>
             </div>
         @endif
-        <h1 class="text-4xl font-bold text-center mb-4 text-blue-600 py-10">Tampilkan Nilai</h1>
 
+        <h1 class="text-4xl font-bold text-center mb-4 text-blue-600 py-10">Tampilkan Nilai</h1>
+        {{-- {{ $ni }} --}}
         <div class="bg-white p-6 rounded-lg shadow-md">
             <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Identitas Siswa</h2>
-
             <div class="mb-4">
-                <p><strong>NIS:</strong> {{ $siswa->nis }}</p>
+                <p><strong>NIS:</strong> <span id="test">{{ $siswa->nis }}</span></p>
                 <p><strong>Nama Lengkap:</strong> {{ $siswa->nama_lengkap }}</p>
                 <p><strong>Kelas:</strong> {{ $siswa->kelas->nama_kelas }}</p>
             </div>
 
-            <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Nilai Siswa</h2>
 
+            <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Nilai Siswa</h2>
+            <div class=" grid grid-cols-3 gap-4 my-10">
+                <div class="flex items-center ps-4 border  bg-blue-200 border-none rounded dark:border-gray-700">
+                    <input id="bordered-radio-1" type="radio" value="1" name="bordered-radio"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm font-medium text-blue-600">
+                        Tahun 1</label>
+                </div>
+                <div class="flex items-center ps-4 border bg-blue-200 border-none rounded dark:border-gray-700">
+                    <input checked id="bordered-radio-2" type="radio" value="2" name="bordered-radio"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="bordered-radio-2" class="w-full py-4 ms-2 text-sm font-medium text-blue-600">
+                        Tahun 2</label>
+                </div>
+                <div class="flex items-center ps-4 border bg-blue-200 border-none rounded dark:border-gray-700">
+                    <input checked id="bordered-radio-3" type="radio" value="3" name="bordered-radio"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="bordered-radio-2" class="w-full py-4 ms-2 text-sm font-medium text-blue-600">
+                        Tahun 3</label>
+                </div>
+
+            </div>
+
+            <div class=" grid grid-cols-2 gap-4 my-10">
+                <div class="flex items-center ps-4 border  bg-blue-200 border-none rounded dark:border-gray-700">
+                    <input id="bordered-radio-1" type="radio" value="1" name="p"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm font-medium text-blue-600">Semester
+                        1</label>
+                </div>
+                <div class="flex items-center ps-4 border bg-blue-200 border-none rounded dark:border-gray-700">
+                    <input checked id="bordered-radio-2" type="radio" value="2" name="p"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="bordered-radio-2" class="w-full py-4 ms-2 text-sm font-medium text-blue-600">Semester
+                        2</label>
+                </div>
+
+            </div>
             <table class="min-w-full bg-white border border-gray-200">
                 <thead>
                     <tr>
@@ -73,3 +110,74 @@
         </div>
     </div>
 @endsection
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const yearRadios = document.querySelectorAll('input[name="bordered-radio"]');
+        const semesterRadios = document.querySelectorAll('input[name="p"]');
+        const nisElement = document.getElementById('test');
+        const nisText = nisElement.innerText; // atau nisElement.textContent
+        // console.log(nisText); // Output: "NIS: 123456"
+
+        function fetchData(tahunAjaranId, semesterId, nisText) {
+            fetch(
+                    `/fetch/nilai/${nisText}?tahun_ajaran_id=${tahunAjaranId}&semester_id=${semesterId}`
+                )
+                .then(response => response.json())
+                .then(data => {
+                    updateTable(data);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function updateTable(data) {
+            const tbody = document.querySelector('tbody');
+            tbody.innerHTML = ''; // Clear the table
+
+            data.forEach(nilai => {
+                const row = `
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">${nilai.mapel.nama}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">${nilai.semester}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">${nilai.jenis_nilai}</td>
+                        <td class="px-6 py-4 whitespace-nowrap ${nilai.nilai < nilai.mapel.kkm ? 'text-red-500' : ''}">${nilai.nilai}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">${nilai.keterangan}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <a href="/nilai/edit/${nilai.id}" class="text-blue-500">Edit</a> |
+                            <form action="/nilai/destroy/${nilai.id}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus nilai ini?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-500">Hapus</button>
+                            </form>
+                        </td>
+                    </tr>
+                `;
+                tbody.insertAdjacentHTML('beforeend', row);
+            });
+        }
+
+        yearRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                const selectedYear = document.querySelector(
+                    'input[name="bordered-radio"]:checked').value;
+                const selectedSemester = document.querySelector('input[name="p"]:checked')
+                    .value;
+                fetchData(selectedYear, selectedSemester, nisText);
+            });
+        });
+
+        semesterRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                const selectedYear = document.querySelector(
+                    'input[name="bordered-radio"]:checked').value;
+                const selectedSemester = document.querySelector('input[name="p"]:checked')
+                    .value;
+                fetchData(selectedYear, selectedSemester);
+            });
+        });
+
+        // Initialize the table with default values
+        const initialYear = document.querySelector('input[name="bordered-radio"]:checked').value;
+        const initialSemester = document.querySelector('input[name="p"]:checked').value;
+        fetchData(initialYear, initialSemester);
+    });
+</script>

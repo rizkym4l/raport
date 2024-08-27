@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function indexmapel()
+    public function indexMapel()
     {
         return view('admin.mapel');
     }
