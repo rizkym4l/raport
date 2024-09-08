@@ -26,36 +26,31 @@ class AuthController extends Controller
     }
     public function loginAction(Request $request)
     {
-        // Validasi input
-        // Validator::make($request->all(), [
-        //     'email' => 'required|email',
-        //     'password' => 'required'
-
-        // ])->validate();
-
-        // // Coba otentikasi pengguna
-        // if (!Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
-        //     throw ValidationException::withMessages(['email' => trans('auth.failed')]);
-        // }
-
         $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
+            'name' => 'required', // Ubah dari 'email' ke 'name'
+            'password' => 'required',
         ]);
 
-        $user = $request->only(['email', 'password']);
-        if (Auth::attempt($user)) {
+        // Gunakan name dan password untuk otentikasi
+        $credentials = ['name' => $request->name, 'password' => $request->password];
+
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $user = Auth::user();
 
+            // Redirect sesuai dengan role
             if ($user->role == 'guru') {
                 return redirect()->route('guru.index');
             } elseif ($user->role == 'siswa') {
                 return redirect()->route('dashboard');
             }
+        } else {
+            // Jika otentikasi gagal
+            throw ValidationException::withMessages([
+                'name' => [trans('auth.failed')],
+            ]);
         }
-
-
     }
+
 
     public function logout(Request $request)
     {

@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Models\Siswa;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GuruController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\ProfileController;
@@ -39,7 +41,8 @@ Route::middleware('auth')->group(function () {
     })->name('error');
     Route::middleware('checkRole:siswa')->group(function () {
         Route::get('dashboard', function () {
-            return view('dashboard');
+            $nama = Siswa::where('akun_id', Auth::user()->id)->get();
+            return view('dashboard', ['nama' => $nama[0]['nama_lengkap']]);
         })->name('dashboard');
         Route::get('/nilai/siswa/{tingkat}/{semester}', [NilaiController::class, 'index']);
 

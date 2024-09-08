@@ -25,7 +25,7 @@ class NilaiSiswa extends Model
         'nis_siswa',
     ];
 
-    public function nilai()
+    public function nilaiNama()
     {
         return $this->belongsTo(Nilai::class, 'nilai_id');
     }

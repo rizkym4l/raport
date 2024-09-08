@@ -1,8 +1,9 @@
-    @extends('layouts.app')
+@extends('layouts.app')
 
-    @section('title', 'Data Nilai')
+@section('title', 'Data Nilai')
 
-    @section('contents')
+@section('contents')
+    @if ($tahun_ajaran)
         <div class="container mx-auto px-4 py-8 h-full">
             <div class="flex items-center mb-8">
                 <button onclick="window.history.back()"
@@ -18,9 +19,11 @@
                                 class="text-blue-700">{{ $siswa->nama_lengkap }}</span>
                         </p>
                         <p class="text-lg"><strong>NIS:</strong> <span class="text-blue-700">{{ $siswa->nis }}</span></p>
-                        <p class="text-lg"><strong>Kelas:</strong> <span class="text-blue-700">{{ $nama_kelas }}</span>
-                        </p>
+                        {{-- <p class="text-lg"><strong>Kelas:</strong> <span class="text-blue-700">{{ $nama_kelas }}</span></p> --}}
                         <p class="text-lg"><strong>Semester:</strong> <span class="text-blue-700">{{ $semester }}</span>
+                        </p>
+                        <p class="text-lg"><strong>Tahun Ajaran:</strong> <span
+                                class="text-blue-700">{{ $tahun_ajaran['tahun'] }}</span>
                         </p>
                     </div>
                 </div>
@@ -30,37 +33,15 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="bg-blue-100 p-4 rounded-lg shadow-md">
                         <h2 class="text-2xl font-semibold mb-4 text-gray-700">Sikap Sosial</h2>
-                        <table class="min-w-full bg-white rounded-lg">
-                            <thead class="bg-gray-200">
-                                <tr>
-                                    <th class="text-left py-2 px-4 text-gray-700">Predikat</th>
-                                    <th class="text-left py-2 px-4 text-gray-700">Keterangan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="py-2 px-4 text-gray-700">A</td>
-                                    <td class="py-2 px-4 text-gray-700">Anak Sopan Sntun Sapa Sayang</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="flex justify-center items-center h-24">
+                            <span class="text-gray-500 text-xl">Coming Soon</span>
+                        </div>
                     </div>
                     <div class="bg-blue-100 p-4 rounded-lg shadow-md">
                         <h2 class="text-2xl font-semibold mb-4 text-gray-700">Sikap Spiritual</h2>
-                        <table class="min-w-full bg-white rounded-lg">
-                            <thead class="bg-gray-200">
-                                <tr>
-                                    <th class="text-left py-2 px-4 text-gray-700">Predikat</th>
-                                    <th class="text-left py-2 px-4 text-gray-700">Keterangan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="py-2 px-4 text-gray-700">C</td>
-                                    <td class="py-2 px-4 text-gray-700">Pusing...</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="flex justify-center items-center h-24">
+                            <span class="text-gray-500 text-xl">Coming Soon</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -103,24 +84,27 @@
                         </div>
                     </div>
                 @else
-                    <table class="min-w-full bg-white shadow-xl text-black border-black  rounded-lg">
+                    <table class="min-w-full bg-white shadow-xl text-black border-collapse border border-black rounded-lg">
                         <thead class="bg-blue-100">
                             <tr>
                                 @foreach ($data[0] as $header)
-                                    <th class="text-left py-2 px-4">{{ $header }}</th>
+                                    <th class="text-left py-2 px-4 border border-black">{{ $header }}</th>
                                 @endforeach
                             </tr>
                         </thead>
-                        <tbody class="">
+                        <tbody>
                             @foreach ($data as $key => $row)
                                 @if ($key > 0)
                                     <tr class="hover:bg-gray-100">
-                                        <td class="text-center py-2 px-4 border-y-2">{{ $key }}.</td>
-                                        <td class="py-2 px-4 border-y-2">{{ $row['mapel_id'] }}</td>
+                                        <td class="text-center py-2 px-4 border border-black">{{ $key }}.</td>
+                                        <td class="py-2 px-4 border border-black text-left">{{ $row['mapel_id'] }}</td>
                                         @foreach ($sap as $n)
-                                            <td class="py-2 px-4 border-y-2">{{ $row[$n->name] ?? '-' }}</td>
+                                            <td class="py-2 px-4 border border-black text-center">
+                                                {{ $row[$n->name] ?? '-' }}
+                                            </td>
                                         @endforeach
-                                        <td class="py-2 px-4 border-y-2">{{ $row['keterangan'] ?? '' }}</td>
+                                        {{-- <td class="py-2 px-4 border border-black text-center">{{ $row['keterangan'] ?? '' }}
+                                    </td> --}}
                                     </tr>
                                 @endif
                             @endforeach
@@ -138,4 +122,8 @@
             </div>
 
         </div>
-    @endsection
+    @else
+        <p class="text-lg text-red-500"><strong>Tahun Ajaran:</strong> Data belum tersedia</p>
+    @endif
+
+@endsection

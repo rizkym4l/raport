@@ -28,8 +28,11 @@
                     </svg>
                     Welcome
                 </a>
-                <h1 class="text-blue-500 text-3xl md:text-5xl font-extrabold mb-5">Selamat Datang, {{ Auth::user()->name }}
+                <h1 class="text-blue-500 text-3xl md:text-5xl font-extrabold mb-5">Selamat Datang,
+                    {{ $nama }}
                 </h1>
+
+
                 <p class="text-lg font-normal text-gray-500 dark:text-gray-400 mb-8">Lorem ipsum, dolor sit amet consectetur
                     adipisicing elit. Omnis alias eaque debitis vel illo, repellat consequuntur cumque quaerat voluptate?
                     Hic

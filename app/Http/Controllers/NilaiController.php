@@ -35,7 +35,7 @@ class NilaiController extends Controller
         foreach ($sap as $n) {
             $header[] = $n->name;
         }
-        $header[] = 'Keterangan';
+        $header;
         $data[] = $header;
 
         foreach ($allMapels as $mapel) {
@@ -56,26 +56,42 @@ class NilaiController extends Controller
             foreach ($nilaiData as $nilai) {
                 $nilaiName = $sap->firstWhere('id', $nilai->nilai_id)->name;
                 $mapelData[$nilaiName] = $nilai->nilai;
-                if ($nilai->keterangan) {
-                    $mapelData['keterangan'] = $nilai->keterangan;
-                }
             }
 
             $data[] = $mapelData;
         }
 
-        // dd($data);
+        $nilai_murid = NilaiSiswa::select('tahun_ajaran_id')->where('nis_siswa', $siswa->nis)
+            ->where('tingkat', $tingkat)
+            ->where('semester', $semester)
+            ->get();
 
-        // die();
+        if ($nilai_murid->isEmpty()) {
+            return view('nilaisiswa', [
+                'data' => $data,
+                'siswa' => $siswa,
+                'tahun_ajaran' => null, // Data kosong
+                'sap' => $sap,
+                'nama_kelas' => $siswa->kelas->nama_kelas,
+                'semester' => $semester,
+                'tingkat' => $tingkat,
+                'error' => 'Data tahun ajaran belum tersedia.',
+            ]);
+        }
+
+        $tahun_ajaran = TahunAjaran::select('tahun')->where('id', $nilai_murid[0]->tahun_ajaran_id)->first();
+
         return view('nilaisiswa', [
             'data' => $data,
             'siswa' => $siswa,
+            'tahun_ajaran' => $tahun_ajaran,
             'sap' => $sap,
             'nama_kelas' => $siswa->kelas->nama_kelas,
             'semester' => $semester,
-            'tingkat' => $tingkat
+            'tingkat' => $tingkat,
         ]);
     }
+
 
     public function fetchNilai(Request $request, $nis)
     {
@@ -85,6 +101,7 @@ class NilaiController extends Controller
 
         $nilaiSiswa = NilaiSiswa::where('nis_siswa', $nis)->where('tingkat', $tahunAjaranId)
             ->where('semester', $semesterId)
+            ->with('nilaiNama')
             ->get();
 
         $nilaiSiswa->load('mapel');
@@ -115,7 +132,7 @@ class NilaiController extends Controller
         foreach ($sap as $n) {
             $header[] = $n->name;
         }
-        $header[] = 'Keterangan';
+        $header;
         $data[] = $header;
 
         foreach ($allMapels as $mapel) {

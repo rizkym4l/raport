@@ -40,8 +40,8 @@
                     </div>
                 @endif
                 <div>
-                    <label class="block text-base text-gray-600">Email</label>
-                    <input name="email" type="email" placeholder="Email Address"
+                    <label class="block text-base text-gray-600">Name</label>
+                    <input name="name" type="text" placeholder="Enter Nickname"
                         class="w-full p-3 mt-2 bg-white text-gray-700 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 </div>
                 <div>
@@ -62,10 +62,10 @@
                     <button type="submit"
                         class="w-full py-3 mt-4 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 transition duration-300">Login</button>
                 </div>
-                <p class="mt-4 text-center text-gray-600">Don't have an account yet?
+                {{-- <p class="mt-4 text-center text-gray-600">Don't have an account yet?
                     <a href="{{ route('register') }}"
                         class="text-blue-600 hover:text-blue-800 hover:underline">Register</a>
-                </p>
+                </p> --}}
             </form>
         </div>
     </div>

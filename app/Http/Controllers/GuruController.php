@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Guru;
 use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Siswa;
 use App\Models\NilaiSiswa;
 use Illuminate\Http\Request;
 use App\Models\GuruMapelKelas;
+use Illuminate\Support\Facades\Auth;
 
 class GuruController extends Controller
 {
     public function index()
     {
-        return view('guru.dahshboardasli');
+        $nama = Guru::where('akun_id', Auth::user()->id)->get();
+        return view('guru.dahshboardasli', ['nama' => $nama[0]['nama_lengkap']]);
     }
 
     public function pilihKelas(Request $request)
@@ -36,28 +39,18 @@ class GuruController extends Controller
 
         $nilaiSiswa = NilaiSiswa::where('nis_siswa', $siswa_id)
             ->where('mapel_id', $mapel_id)
+            ->with('nilaiNama')
             ->get();
 
         $siswa = Siswa::where('nis', $siswa_id)->first();
 
-        // for ($i=0; $i < ; $i++) { 
-        //     # code...
-        // }
-        $jenisNilai = [
-            1 => 'Sumatif 1',
-            2 => 'Sumatif 2',
-            3 => 'Sumatif 3',
-        ];
-
-        foreach ($nilaiSiswa as $nilai) {
-            $nilai->jenis_nilai = $jenisNilai[$nilai->nilai_id] ?? 'Unknown';
-        }
-
         $nilaiSiswa = $nilaiSiswa->sortBy('semester');
         $mapel = Mapel::select('nama')->where('id', $mapel_id)->first();
-        // dd($nilaiSiswa);
+        // dd($nilaiSiswa[0]['nilaiNama']['name']);
+
         return view('guru.tampilkan_nilai', compact('nilaiSiswa', 'siswa', 'mapel'));
     }
+
 
 
 

@@ -94,7 +94,7 @@
                 @if ($key > 0)
                     <tr>
                         <td>{{ $key }}</td>
-                        <td>{{ $row['mapel_id'] }}</td>
+                        <td style=" text-align: start;">{{ $row['mapel_id'] }}</td>
                         @foreach ($sap as $n)
                             <td>{{ $row[$n->name] ?? '-' }}</td>
                         @endforeach
