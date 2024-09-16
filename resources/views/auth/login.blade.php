@@ -56,7 +56,8 @@
                             checked="checked">
                         <span class="ml-2">Remember me</span>
                     </label>
-                    <a href="#" class="text-blue-600 hover:text-blue-800 text-sm">Forgot Password?</a>
+                    <a href="https://wa.me/6281385088095" class="text-blue-600 hover:text-blue-800 text-sm">Forgot
+                        Password?</a>
                 </div>
                 <div>
                     <button type="submit"

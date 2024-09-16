@@ -134,6 +134,7 @@ class NilaiController extends Controller
         }
         $header;
         $data[] = $header;
+        $tahunAjaran = '';
 
         foreach ($allMapels as $mapel) {
             $nilaiData = NilaiSiswa::where('semester', $semester)
@@ -141,6 +142,13 @@ class NilaiController extends Controller
                 ->where('nis_siswa', $siswa->nis)
                 ->where('mapel_id', $mapel->id)
                 ->get();
+
+            if ($nilaiData->isNotEmpty()) {
+                $tahunAjaran = TahunAjaran::select('tahun')->where('id', $nilaiData->first()->tahun_ajaran_id)->get();
+                $tahunAjaran = $tahunAjaran->first()['tahun'];
+            } else {
+                $tahunAjaran = '2024/2025';
+            }
 
             $mapelData = [
                 'mapel_id' => $mapel->nama,
@@ -160,11 +168,12 @@ class NilaiController extends Controller
 
             $data[] = $mapelData;
         }
-        // dd($tingkat);
+        // dd($data);
 
         $pdf = Pdf::loadView('cetak_nilai', [
             'data' => $data,
             'siswa' => $siswa,
+            'tahun' => $tahunAjaran,
             'sap' => $sap,
             'nama_kelas' => $siswa->kelas->nama_kelas,
             'semester' => $semester,
@@ -189,22 +198,28 @@ class NilaiController extends Controller
 
         switch ($nilai1) {
             case 1:
-                $nilai = 'sumatif 1';
+                $nilai = 'Formatif 1';
                 break;
             case 2:
-                $nilai = 'sumatif 2';
+                $nilai = 'Formatif 2';
                 break;
             case 3:
-                $nilai = 'formatif 1';
+                $nilai = 'Sumatif 1';
                 break;
             case 4:
-                $nilai = 'formatif 2';
+                $nilai = 'Sumatif 2';
                 break;
             case 5:
-                $nilai = 'ulangan tengah semester';
+                $nilai = 'Sumatif 3';
                 break;
             case 6:
-                $nilai = 'ulangan akhir semester';
+                $nilai = 'STS';
+                break;
+            case 7:
+                $nilai = 'TA';
+                break;
+            case 8:
+                $nilai = 'SAS';
                 break;
             default:
                 $nilai = null;
@@ -261,16 +276,13 @@ class NilaiController extends Controller
         }
     }
 
-    public function export(Request $request)
+
+    public function export()
     {
-        $data = $request->only(['tingkat', 'kelas', 'mapel', 'semester', 'nilai']);
-
-        if (!isset($data['kelas'])) {
-            return redirect()->back()->with('error', 'Kelas tidak ditemukan dalam request.');
-        }
-
-        return Excel::download(new NilaiExport($data), 'NilaiTemplate.xlsx');
+        return Excel::download(new NilaiExport, 'NilaiTemplate.xlsx');
     }
+
+
     public function edit($id)
     {
         $nilai = NilaiSiswa::findOrFail($id);

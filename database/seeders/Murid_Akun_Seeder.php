@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Guru;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -498,6 +499,40 @@ class Murid_Akun_Seeder extends Seeder
 
 
         }
+        DB::table('users')->insert([
+            'name' => 'guru1',
+            'email' => 'guru1' . '@example.com',
+            'photo' => 'noPhoto',
+            'password' => Hash::make('123456'),
+            'role' => 'guru',
+        ]);
+        DB::table('users')->insert([
+            'name' => 'guru2',
+            'email' => 'guru2' . '@example.com',
+            'photo' => 'noPhoto',
+            'password' => Hash::make('123456'),
+            'role' => 'guru',
+        ]);
+        Guru::create([
+            'nipk' => 10092,
+            'nama_lengkap' => 'GURU 1',
+            'akun_id' => 368,
+            'mapel_id' => 2
+        ]);
+        Guru::create([
+            'nipk' => 100921,
+            'nama_lengkap' => 'GURU 2',
+            'akun_id' => 369,
+            'mapel_id' => 2
+        ]);
+        DB::table('users')->insert([
+            'name' => 'admin',
+            'email' => 'admin' . '@example.com',
+            'photo' => 'noPhoto',
+            'password' => Hash::make('123123123'),
+            'role' => 'admin',
+        ]);
+
     }
 }
 

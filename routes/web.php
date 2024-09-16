@@ -48,7 +48,7 @@ Route::middleware('auth')->group(function () {
 
     });
     Route::get('/etdah', function () {
-        return view('test');
+        return view('admin.dashboard');
     });
 
     Route::middleware('checkRole:guru')->group(function () {
@@ -61,7 +61,7 @@ Route::middleware('auth')->group(function () {
         Route::get('guru/kelas/{kelas_id}', [GuruController::class, 'pilihsiswa'])->name('guru.showStudents');
         Route::get('guru/siswa/{nis}', [GuruController::class, 'tampilkanNilai'])->name('guru.tampilkan_nilai');
         Route::get('/index', [GuruController::class, 'index'])->name('guru.index');
-        Route::get('/nilai/export', [NilaiController::class, 'export'])->name('nilai.export');
+        Route::get('/export', [NilaiController::class, 'export'])->name('nilai.sport');
         Route::post('/nilai/store', [NilaiController::class, 'store'])->name('nilai.store');
         Route::get('/tingkatan', [TingkatanController::class, 'index'])->name('tingkatan');
         Route::get('/kelas/{tingkatan}', [TingkatanController::class, 'kelas']);
@@ -73,7 +73,12 @@ Route::middleware('auth')->group(function () {
     });
 });
 Route::middleware('checkRole:admin')->group(function () {
-    Route::get('admin/mapel', [AdminController::class, 'indexMapel'])->name('admin.mapel');
+    Route::get('admin/users', [AdminController::class, 'indexUsers'])->name(name: 'admin.users');
+    Route::get('admin/users/create', [AdminController::class, 'create'])->name(name: 'users.create');
+    Route::post('admin/users/store', [AdminController::class, 'store'])->name('users.store');
+    Route::get('admin/users/edit/{id}', [AdminController::class, 'edit'])->name('users.edit');
+    Route::put('admin/users/update/{id}', [AdminController::class, 'update'])->name('users.update');
+    Route::delete('admin/users/delete/{id}', [AdminController::class, 'deleteUsers'])->name('users.destroy');
 });
 
 Route::fallback(function () {

@@ -6,6 +6,7 @@ use App\Models\Mapel;
 use App\Models\Nilai;
 use App\Models\Siswa;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class NilaiSiswa extends Model
@@ -40,8 +41,13 @@ class NilaiSiswa extends Model
         return $this->belongsTo(Siswa::class, 'nis_siswa');
     }
 
-    public function tahunAjaran()
+    /**
+     * Get the user that owns the NilaiSiswa
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function tahunAjaran(): BelongsTo
     {
-        return $this->belongsTo(TahunAjaran::class, 'tahun_ajaran_id');
+        return $this->belongsTo(TahunAjaran::class, 'tahun_ajaran_id', 'id');
     }
 }

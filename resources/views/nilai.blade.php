@@ -5,6 +5,7 @@
 @section('contents')
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-4xl font-bold text-center mb-8 text-blue-600">Pilih Nilai</h1>
+        {{-- <h1 class=" text-blue-300 table  font-semibold">asdasda</h1> --}}
         <div class="flex items-center mb-8">
             <button onclick="window.history.back()"
                 class="btn bg-blue-500 text-white mx-2 sm:mx-0 border-blue-600 border-2 hover:bg-blue-600 hover:border-blue-700 mr-auto">Kembali</button>

@@ -68,7 +68,7 @@
     </div>
 
     <div class="title">Laporan Hasil Sumatif Tengah Semester Ganjil</div>
-    <div class="title">Tahun Pelajaran 2023/2024</div>
+    <div class="title">Tahun Pelajaran {{ $tahun }}</div>
 
     <div class="header" style="text-align: left; margin-top: 20px;">
         <p><strong>Nama Sekolah:</strong> SMP Islam Terpadu Al Kahfi</p>
@@ -77,7 +77,7 @@
         <p><strong>No. Induk/NISN:</strong> {{ $siswa->nis }}</p>
         <p><strong>Kelas:</strong> {{ $nama_kelas }}</p>
         <p><strong>Semester:</strong> {{ $semester }}</p>
-        <p><strong>Tahun Pelajaran:</strong> 2023/2024</p>
+        <p><strong>Tahun Pelajaran:</strong> {{ $tahun }}</p>
     </div>
 
     <h3 style="text-align: center; font-weight: bold;">Capaian Kompetensi</h3>
@@ -98,7 +98,6 @@
                         @foreach ($sap as $n)
                             <td>{{ $row[$n->name] ?? '-' }}</td>
                         @endforeach
-                        <td>{{ $row['keterangan'] ?? '' }}</td>
                     </tr>
                 @endif
             @endforeach

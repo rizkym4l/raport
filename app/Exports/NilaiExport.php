@@ -2,28 +2,27 @@
 
 namespace App\Exports;
 
-use App\Models\Siswa;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-
-class NilaiExport implements FromCollection, WithHeadings, ShouldAutoSize
+class NilaiExport implements FromArray, WithHeadings, ShouldAutoSize
 {
     /**
-     * @return \Illuminate\Support\Collection
+     * Return an array with headers only.
+     *
+     * @return array
      */
-    protected $data;
-
-    public function __construct($data)
+    public function array(): array
     {
-        $this->data = $data;
-    }
-    public function collection()
-    {
-        return '';
+        return [];
     }
 
+    /**
+     * Set the headings for the Excel file.
+     *
+     * @return array
+     */
     public function headings(): array
     {
         return [
@@ -33,6 +32,4 @@ class NilaiExport implements FromCollection, WithHeadings, ShouldAutoSize
             'Tahun Ajaran',
         ];
     }
-
-
 }
