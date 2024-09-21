@@ -11,6 +11,12 @@ class Kelas extends Model
 {
     use HasFactory;
     protected $table = 'kelas';
+
+    protected $fillable = [
+        'nama_kelas',
+        'tingkat'
+    ];
+
     public function guruKelasMapel()
     {
         return $this->hasMany(GuruMapelKelas::class, 'kelas_id');
@@ -25,5 +31,4 @@ class Kelas extends Model
     {
         return $this->belongsToMany(Guru::class, 'guru_kelas_mapel', 'kelas_id', 'guru_id');
     }
-
 }

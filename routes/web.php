@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\KelasController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\ProfileController;
@@ -77,6 +78,8 @@ Route::middleware('checkRole:admin')->group(function () {
     Route::get('admin/users/create', [AdminController::class, 'create'])->name(name: 'users.create');
     Route::post('admin/users/store', [AdminController::class, 'store'])->name('users.store');
     Route::get('admin/users/edit/{id}', [AdminController::class, 'edit'])->name('users.edit');
+    Route::get('kelas/search', [KelasController::class, 'search'])->name('kelas.search');
+
     Route::put('admin/users/update/{id}', [AdminController::class, 'update'])->name('users.update');
     Route::delete('admin/users/delete/{id}', [AdminController::class, 'deleteUsers'])->name('users.destroy');
 });
