@@ -3,18 +3,13 @@
 @section('contentAdmin')
     <div class="container mx-auto p-6 space-y-6">
 
-        @if (session('success'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative">
-                <strong>Success!</strong>
-                <span>{{ session('success') }}</span>
-            </div>
-        @endif
+        <h2 class="text-2xl font-bold">Daftar Kelas</h2> <!-- Heading utama untuk halaman -->
 
         <div class="flex justify-between">
-            <form action="{{ route('kelas.index') }}" method="GET" class="flex w-4/5">
-                <input type="text" name="search" id="search" class="border border-gray-300 rounded-lg px-4 py-2 w-full"
-                    placeholder="Search Kelas..." value="{{ request()->input('search') }}">
-
+            <form action="{{ route('kelas.index') }}" method="GET" class="flex w-4/5 bg-white">
+                <input type="text" name="search" id="search"
+                    class="border border-gray-300 bg-white rounded-lg px-4 py-2 w-full" placeholder="Search Kelas..."
+                    value="{{ request()->input('search') }}">
             </form>
 
             <a href="{{ route('kelas.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md">
@@ -23,7 +18,7 @@
         </div>
 
         <div class="bg-white p-6 rounded-lg shadow-md">
-            <h2 class="text-lg font-semibold mb-4">Kelas List</h2>
+            <h3 class="text-lg font-semibold mb-4">List of Classes</h3> <!-- Heading tabel -->
 
             <table class="min-w-full bg-white">
                 <thead>
@@ -61,6 +56,7 @@
             </div>
         </div>
     </div>
+
     <script>
         document.getElementById('search').addEventListener('input', function() {
             const query = this.value;

@@ -23,8 +23,6 @@
                             d="M17 13c0 2.038-2.239 4.5-5 4.5S7 15.038 7 13c0 1.444 10 1.444 10 0Z" />
                         <path fill="currentColor"
                             d="m9 6.811.618 1.253 1.382.2-1 .975.236 1.377L9 9.966l-1.236.65L8 9.239l-1-.975 1.382-.2L9 6.811Zm6 0 .618 1.253 1.382.2-1 .975.236 1.377L15 9.966l-1.236.65L14 9.239l-1-.975 1.382-.2L15 6.811Z" />
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                            d="m9 6.811.618 1.253 1.382.2-1 .975.236 1.377L9 9.966l-1.236.65L8 9.239l-1-.975 1.382-.2L9 6.811Zm6 0 .618 1.253 1.382.2-1 .975.236 1.377L15 9.966l-1.236.65L14 9.239l-1-.975 1.382-.2L15 6.811Z" />
                     </svg>
                     Welcome
                 </a>
@@ -35,8 +33,7 @@
 
                 <p class="text-lg font-normal text-gray-500 dark:text-gray-400 mb-8">Lorem ipsum, dolor sit amet consectetur
                     adipisicing elit. Omnis alias eaque debitis vel illo, repellat consequuntur cumque quaerat voluptate?
-                    Hic
-                    minima accusamus placeat nesciunt iure, nam vel aliquid beatae unde.</p>
+                    Hic minima accusamus placeat nesciunt iure, nam vel aliquid beatae unde.</p>
                 <a href="#overview"
                     class="inline-flex animate-bounce justify-center items-center py-2.5 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
                     Scroll
@@ -96,18 +93,24 @@
                 </tbody>
             </table>
         </div>
+
+        {{-- Section untuk nilai history --}}
+        <div class="mt-10 bg-white p-6 rounded-lg shadow-lg overflow-hidden max-w-screen-xl mx-auto">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">History Nilai</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach ($nilaiHistory as $nilai)
+                    <div class="bg-blue-100 border-l-4 border-blue-500 p-4 rounded-lg shadow">
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="text-lg font-semibold">{{ $nilai->mata_pelajaran }}</h4>
+                            <span class="text-sm text-gray-600">{{ $nilai->tanggal }}</span>
+                        </div>
+                        <p class="text-gray-700">Nilai: <span class="font-bold">{{ $nilai->nilai }}</span></p>
+                        <p class="text-gray-500 text-sm">Tingkat: {{ $nilai->tingkat }} | Semester: {{ $nilai->semester }}
+                        </p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const scrollButton = document.getElementById('a[href="#overview"]');
-
-            scrollButton.addEventListener('click', function(event) {
-                event.preventDefault();
-                document.querySelector('#overview').scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
 @endsection

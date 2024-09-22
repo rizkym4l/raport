@@ -50,7 +50,7 @@
                         <p>Users</p>
                     </a>
                     <a href="
-                    {{-- {{ route('admin.users') }} --}}
+                    {{ route('kelas.index') }}
                     "
                         class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-blue-100">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"

@@ -17,14 +17,14 @@ class KelasController extends Controller
                 ->orWhere('tingkat', 'like', "%{$search}%");
         }
 
-        return view('kelas.index', [
-            'kelas' => $kelas->paginate(10),
+        return view('admin.kelas.index', [
+            'kelas' => $kelas->paginate(8),
         ]);
     }
 
     public function create()
     {
-        return view('kelas.create');
+        return view('admin.kelas.create');
     }
 
     public function store(Request $request)
@@ -41,7 +41,7 @@ class KelasController extends Controller
 
     public function edit(Kelas $kelas)
     {
-        return view('kelas.edit', compact('kelas'));
+        return view('admin.kelas.edit', compact('kelas'));
     }
     public function search(Request $request)
     {

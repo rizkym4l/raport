@@ -12,16 +12,25 @@ use App\Models\NilaiSiswa;
 use App\Models\TahunAjaran;
 use App\Exports\NilaiExport;
 use App\Imports\NilaiImport;
+use App\Models\NilaiHistory;
 use Illuminate\Http\Request;
+
+
+
 use Barryvdh\DomPDF\Facade\Pdf;
-
-
-
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 class NilaiController extends Controller
 {
+    public function history($id)
+    {
+        $nilai = Nilai::findOrFail($id);
+        $history = NilaiHistory::where('nilai_id', $id)->with('user')->orderBy('created_at', 'desc')->get();
+
+        return view('nilai.history', compact('nilai', 'history'));
+    }
+
     public function index($tingkat, $semester)
     {
         $sap = Nilai::select('name', 'id')->get();
@@ -298,9 +307,16 @@ class NilaiController extends Controller
         ]);
 
         $nilai = NilaiSiswa::findOrFail($id);
+        $oldNilai = $nilai->nilai;
         $nilai->nilai = $request->input('nilai');
         // $nilai->keterangan = $request->input('keterangan');
         $nilai->save();
+        NilaiHistory::create([
+            'nilai_siswa_id' => $nilai->id,
+            'user_id' => auth()->id(),
+            'nilai_before' => $oldNilai,
+            'nilai_after' => $request->nilai,
+        ]);
 
         return redirect()->route('guru.tampilkan_nilai', $nilai->nis_siswa)->with('success', 'Nilai berhasil diperbarui');
     }

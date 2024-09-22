@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Siswa;
+use App\Models\NilaiHistory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -42,10 +43,14 @@ Route::middleware('auth')->group(function () {
     })->name('error');
     Route::middleware('checkRole:siswa')->group(function () {
         Route::get('dashboard', function () {
+            $history = NilaiHistory::with('nilaiSiswa', 'user')->latest()->take(5)->get();
+            dd($history);
             $nama = Siswa::where('akun_id', Auth::user()->id)->get();
-            return view('dashboard', ['nama' => $nama[0]['nama_lengkap']]);
+            return view('dashboard', ['nama' => $nama[0]['nama_lengkap'], 'nilaiHistory' => $history]);
         })->name('dashboard');
         Route::get('/nilai/siswa/{tingkat}/{semester}', [NilaiController::class, 'index']);
+        Route::get('nilai/{id}/history', [NilaiController::class, 'history'])->name('nilai.history');
+
 
     });
     Route::get('/etdah', function () {
@@ -78,7 +83,14 @@ Route::middleware('checkRole:admin')->group(function () {
     Route::get('admin/users/create', [AdminController::class, 'create'])->name(name: 'users.create');
     Route::post('admin/users/store', [AdminController::class, 'store'])->name('users.store');
     Route::get('admin/users/edit/{id}', [AdminController::class, 'edit'])->name('users.edit');
+
+    Route::get('kelas/', [KelasController::class, 'index'])->name('kelas.index');
     Route::get('kelas/search', [KelasController::class, 'search'])->name('kelas.search');
+    Route::get('kelas/create/asdasda', [KelasController::class, 'create'])->name('kelas.create');
+    Route::get('kelas/edit/{id}', [KelasController::class, 'edit'])->name('kelas.edit');
+    Route::post('kelas/store', [KelasController::class, 'store'])->name('kelas.store');
+    Route::delete('kelas/destroy/{id}', [KelasController::class, 'destroy'])->name('kelas.destroy');
+    Route::put('kelas/update', [KelasController::class, 'update'])->name('kelas.update');
 
     Route::put('admin/users/update/{id}', [AdminController::class, 'update'])->name('users.update');
     Route::delete('admin/users/delete/{id}', [AdminController::class, 'deleteUsers'])->name('users.destroy');
