@@ -31,6 +31,100 @@ class NilaiController extends Controller
         return view('nilai.history', compact('nilai', 'history'));
     }
 
+    // public function index($tingkat, $semester)
+
+
+    // {
+    //     $sap = Nilai::select('name', 'id')->get();
+    //     $user = Auth::user()->id;
+    //     $siswa = Siswa::where('akun_id', $user)->with('kelas')->first();
+    //     $allMapels = Mapel::orderBy('id')->get();
+
+    //     $data = [];
+    //     $header = ['NO', 'Mata Pelajaran'];
+
+    //     foreach ($sap as $n) {
+    //         $header[] = $n->name;
+    //     }
+    //     $header;
+    //     $data[] = $header;
+    //     // $nilaiData = ' '9;
+    //     foreach ($allMapels as $mapel) {
+    //         $nilaiData = NilaiSiswa::where('tingkat', $tingkat)
+    //             ->where('semester', $semester)
+    //             ->where('nis_siswa', $siswa->nis)
+    //             ->where('mapel_id', $mapel->id)
+    //             ->get();
+
+    //         $mapelData = [
+    //             'mapel_id' => $mapel->nama,
+    //         ];
+
+    //         foreach ($sap as $n) {
+    //             $mapelData[$n->name] = null;
+    //         }
+
+    //         foreach ($nilaiData as $nilai) {
+    //             $nilaiName = $sap->firstWhere('id', $nilai->nilai_id)->name;
+    //             $mapelData[$nilaiName] = $nilai->nilai;
+    //         }
+
+    //         $data[] = $mapelData;
+    //     }
+
+    //     $nilai_murid = NilaiSiswa::select('tahun_ajaran_id')->where('nis_siswa', $siswa->nis)
+    //         ->where('tingkat', $tingkat)
+    //         ->where('semester', $semester)
+    //         ->get();
+
+    //     if ($nilai_murid->isEmpty()) {
+    //         return view('nilaisiswa', [
+    //             'data' => $data,
+    //             'siswa' => $siswa,
+    //             'tahun_ajaran' => null,
+    //             'sap' => $sap,
+    //             'nama_kelas' => $siswa->kelas->nama_kelas,
+    //             'semester' => $semester,
+    //             'tingkat' => $tingkat,
+    //             'error' => 'Data tahun ajaran belum tersedia.',
+    //         ]);
+    //     }
+
+    //     $tahun_ajaran = TahunAjaran::select('tahun')->where('id', $nilai_murid[0]->tahun_ajaran_id)->first();
+    //     $history = NilaiHistory::get();
+    //     $nilai_history = [];
+    //     $nilai_history_siswa = NilaiSiswa::where('tingkat', $tingkat)
+    //         ->where('semester', $semester)
+    //         ->where('nis_siswa', $siswa->nis)
+    //         ->get();
+    //     // dd($nilai_history_siswa[0]);
+    //     foreach ($history as $h) {
+
+    //         if ($h->nilai_siswa_id == $nilai_history_siswa->first()->id) {
+    //             array_push($nilai_history, $h);
+
+    //         }
+
+
+    //     }
+
+
+    //     // dd(
+    //     //     $nilai_history
+    //     // );
+    //     return view('nilaisiswa', [
+    //         'data' => $data,
+    //         'siswa' => $siswa,
+    //         'tahun_ajaran' => $tahun_ajaran,
+    //         'sap' => $sap,
+    //         'nama_kelas' => $siswa->kelas->nama_kelas,
+    //         'semester' => $semester,
+    //         'tingkat' => $tingkat,
+    //         'history' => $nilai_history
+    //     ]);
+    // }
+
+
     public function index($tingkat, $semester)
     {
         $sap = Nilai::select('name', 'id')->get();
@@ -44,7 +138,7 @@ class NilaiController extends Controller
         foreach ($sap as $n) {
             $header[] = $n->name;
         }
-        $header;
+
         $data[] = $header;
 
         foreach ($allMapels as $mapel) {
@@ -79,7 +173,7 @@ class NilaiController extends Controller
             return view('nilaisiswa', [
                 'data' => $data,
                 'siswa' => $siswa,
-                'tahun_ajaran' => null, // Data kosong
+                'tahun_ajaran' => null,
                 'sap' => $sap,
                 'nama_kelas' => $siswa->kelas->nama_kelas,
                 'semester' => $semester,
@@ -90,6 +184,16 @@ class NilaiController extends Controller
 
         $tahun_ajaran = TahunAjaran::select('tahun')->where('id', $nilai_murid[0]->tahun_ajaran_id)->first();
 
+        // Query untuk menampilkan history nilai dengan join ke tabel terkait
+        $history = NilaiHistory::select('nilai_history.*', 'mapel.nama as mapel_name', 'nilai.name as nilai_name')
+            ->join('nilai_siswa', 'nilai_siswa.id', '=', 'nilai_history.nilai_siswa_id')
+            ->join('mapel', 'nilai_siswa.mapel_id', '=', 'mapel.id')
+            ->join('nilai', 'nilai.id', '=', 'nilai_siswa.nilai_id')
+            ->where('nilai_siswa.nis_siswa', $siswa->nis)
+            ->where('nilai_siswa.tingkat', $tingkat)
+            ->where('nilai_siswa.semester', $semester)
+            ->paginate(5);
+
         return view('nilaisiswa', [
             'data' => $data,
             'siswa' => $siswa,
@@ -98,9 +202,9 @@ class NilaiController extends Controller
             'nama_kelas' => $siswa->kelas->nama_kelas,
             'semester' => $semester,
             'tingkat' => $tingkat,
+            'history' => $history
         ]);
     }
-
 
     public function fetchNilai(Request $request, $nis)
     {

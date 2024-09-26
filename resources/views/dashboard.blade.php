@@ -95,7 +95,7 @@
         </div>
 
         {{-- Section untuk nilai history --}}
-        <div class="mt-10 bg-white p-6 rounded-lg shadow-lg overflow-hidden max-w-screen-xl mx-auto">
+        {{-- <div class="mt-10 bg-white p-6 rounded-lg shadow-lg overflow-hidden max-w-screen-xl mx-auto">
             <h3 class="text-2xl font-bold text-gray-800 mb-4">History Nilai</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach ($nilaiHistory as $nilai)
@@ -110,7 +110,7 @@
                     </div>
                 @endforeach
             </div>
-        </div>
+        </div> --}}
     </div>
 
 @endsection

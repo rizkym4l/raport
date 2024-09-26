@@ -113,6 +113,46 @@
                 @endif
             </div>
 
+            @if ($history->isNotEmpty())
+                <div class="mt-8">
+                    <h3 class="text-lg font-semibold mb-2">History Perubahan Nilai</h3>
+                    <table class="min-w-full bg-white shadow-xl text-black border-collapse border border-black rounded-lg">
+                        <thead class="bg-blue-100">
+                            <tr>
+                                <th class="text-left py-2 px-4 border border-black">Tanggal</th>
+                                <th class="text-left py-2 px-4 border border-black">Mata Pelajaran</th>
+                                <th class="text-left py-2 px-4 border border-black">Nilai Sebelum</th>
+                                <th class="text-left py-2 px-4 border border-black">Nilai Sesudah</th>
+                                <th class="text-left py-2 px-4 border border-black">Keterangan Nilai</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($history as $entry)
+                                <tr class="hover:bg-gray-100">
+                                    <td class="py-2 px-4 border border-black">{{ $entry->created_at->format('d-m-Y') }}
+                                    </td>
+                                    <td class="py-2 px-4 border border-black">{{ $entry->mapel_name }}</td>
+                                    <td class="py-2 px-4 border border-black">{{ $entry->nilai_before }}</td>
+                                    <td class="py-2 px-4 border border-black">{{ $entry->nilai_after }}</td>
+                                    <td class="py-2 px-4 border border-black">{{ $entry->nilai_name }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                    <!-- Pagination Links -->
+                    <div class="mt-4">
+                        {{ $history->links() }} <!-- Laravel menyediakan pagination otomatis -->
+                    </div>
+                </div>
+            @else
+                <div class="mt-8">
+                    <p class="text-gray-500 text-xl">Belum Ada Perubahan Nilai</p>
+                </div>
+            @endif
+
+
+
             <div class="flex justify-end mt-4">
                 <a href="{{ route('siswa.cetak-nilai', $siswa->nis) }}?semester={{ $semester }}&tingkat={{ $tingkat }}"
                     target="_blank"
