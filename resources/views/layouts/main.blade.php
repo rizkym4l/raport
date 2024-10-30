@@ -1,4 +1,3 @@
-<!-- resources/views/layouts/admin.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,109 +5,183 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    @vite('resources/css/app.css') <!-- pastikan file Tailwind di-compile -->
-    <script src="https://unpkg.com/@heroicons/react/outline"></script> <!-- Heroicons -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    @vite('resources/css/app.css')
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <style>
+        /* Custom animations and effects */
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .animate-gradient {
+            background-size: 200% 200%;
+            animation: gradient 15s ease infinite;
+        }
+
+        .glass-effect {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        @keyframes glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 30px rgba(59, 130, 246, 0.8);
+            }
+        }
+
+        .hover-glow:hover {
+            animation: glow 2s ease-in-out infinite;
+        }
+    </style>
 </head>
 
-<body class="bg-gray-100 font-sans antialiased">
-
-    <div class="flex h-screen">
+<body class="bg-[#0B1120] text-white font-['Inter'] antialiased">
+    <div class="flex min-h-screen">
         <!-- Sidebar -->
-        <div class="w-64 bg-slate-800 text-white flex flex-col justify-between shadow-lg">
-            <div>
-                <div class="p-4 flex items-center">
-                    <img src="https://tse2.mm.bing.net/th?id=OIP.jBwefGdT24xikvtdnbmxkQHaHZ&pid=Api&P=0&h=180"
-                        alt="Admin Logo" class="w-10 h-10 rounded-full mr-3">
-                    <h1 class="text-lg font-bold">Admin Panel</h1>
-                </div>
-                <nav class="mt-6">
-                    <a href="#"
-                        class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-blue-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                            class="size-6 size-6  rounded-full mx-2">
-                            <path
-                                d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
-                            <path
-                                d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
-                        </svg>
-
-                        <p>Dashboard</p>
-                    </a>
-                    <a href="{{ route('admin.users') }}"
-                        class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-blue-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                            class="size-6  rounded-full mx-2">
-                            <path fill-rule="evenodd"
-                                d="M8.25 6.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM15.75 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM2.25 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM6.31 15.117A6.745 6.745 0 0 1 12 12a6.745 6.745 0 0 1 6.709 7.498.75.75 0 0 1-.372.568A12.696 12.696 0 0 1 12 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 0 1-.372-.568 6.787 6.787 0 0 1 1.019-4.38Z"
-                                clip-rule="evenodd" />
-                            <path
-                                d="M5.082 14.254a8.287 8.287 0 0 0-1.308 5.135 9.687 9.687 0 0 1-1.764-.44l-.115-.04a.563.563 0 0 1-.373-.487l-.01-.121a3.75 3.75 0 0 1 3.57-4.047ZM20.226 19.389a8.287 8.287 0 0 0-1.308-5.135 3.75 3.75 0 0 1 3.57 4.047l-.01.121a.563.563 0 0 1-.373.486l-.115.04c-.567.2-1.156.349-1.764.441Z" />
-                        </svg>
-
-                        <p>Users</p>
-                    </a>
-                    <a href="
-                    {{ route('kelas.index') }}
-                    "
-                        class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-blue-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                            class="size-6  rounded-full mx-2">
-                            <path fill-rule="evenodd"
-                                d="M3 2.25a.75.75 0 0 0 0 1.5v16.5h-.75a.75.75 0 0 0 0 1.5H15v-18a.75.75 0 0 0 0-1.5H3ZM6.75 19.5v-2.25a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-.75.75h-3a.75.75 0 0 1-.75-.75ZM6 6.75A.75.75 0 0 1 6.75 6h.75a.75.75 0 0 1 0 1.5h-.75A.75.75 0 0 1 6 6.75ZM6.75 9a.75.75 0 0 0 0 1.5h.75a.75.75 0 0 0 0-1.5h-.75ZM6 12.75a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 1 0 1.5h-.75a.75.75 0 0 1-.75-.75ZM10.5 6a.75.75 0 0 0 0 1.5h.75a.75.75 0 0 0 0-1.5h-.75Zm-.75 3.75A.75.75 0 0 1 10.5 9h.75a.75.75 0 0 1 0 1.5h-.75a.75.75 0 0 1-.75-.75ZM10.5 12a.75.75 0 0 0 0 1.5h.75a.75.75 0 0 0 0-1.5h-.75ZM16.5 6.75v15h5.25a.75.75 0 0 0 0-1.5H21v-12a.75.75 0 0 0 0-1.5h-4.5Zm1.5 4.5a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75h-.008a.75.75 0 0 1-.75-.75v-.008Zm.75 2.25a.75.75 0 0 0-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 0 0 .75-.75v-.008a.75.75 0 0 0-.75-.75h-.008ZM18 17.25a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75h-.008a.75.75 0 0 1-.75-.75v-.008Z"
-                                clip-rule="evenodd" />
-                        </svg>
-
-
-                        <p>Class</p>
-                    </a>
-                    <a href="
-                    {{ route('kelas.index') }}
-                    "
-                        class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-blue-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                            class="size-6  rounded-full mx-2">
-                            <path fill-rule="evenodd"
-                                d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
-                                clip-rule="evenodd" />
-                        </svg>
-
-
-
-
-                        <p>Student Score</p>
-                    </a>
-
-                </nav>
-            </div>
-
-            <!-- User Avatar and Logout -->
-            <div class="p-4 border-t border-blue-800">
-                <div class="relative">
-                    <button id="avatarButton" class="w-full flex items-center focus:outline-none">
-                        <img src="https://via.placeholder.com/40" alt="Avatar" class="w-10 h-10 rounded-full mr-3">
-                        <span class="font-semibold">Admin Name</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                            class="w-5 h-5 ml-auto transform transition-transform duration-200" id="chevronIcon">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
-                    <div id="dropdownMenu"
-                        class="absolute right-0 bottom-12 w-full bg-gray-800 text-white rounded-md shadow-lg hidden">
-                        <a href="#"
-                            class="block py-2 px-4 rounded transition duration-200 hover:bg-gray-700">Profile</a>
-                        <a href="{{ route('logout') }}"
-                            class="block py-2 px-4 rounded transition duration-200 hover:bg-gray-700">Logout</a>
+        <aside
+            class="w-80 glass-effect bg-slate-900/50 border-r border-white/10 transform transition-all duration-300 ease-in-out">
+            <!-- Logo Section -->
+            <div class="p-6">
+                <div class="flex items-center gap-3">
+                    <div class="relative w-12 h-12">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-tr from-blue-500 to-purple-500 rounded-xl animate-gradient">
+                        </div>
+                        {{-- <div class="absolute inset-[2px] bg-slate-900 rounded-lg flex items-center justify-center">
+                            <img src="{{ asset('png') }}" alt="Admin Logo" class="w-8 h-8">
+                        </div> --}}
+                    </div>
+                    <div>
+                        <h1
+                            class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                            Admin Panel
+                        </h1>
+                        <p class="text-xs text-slate-400">Management System</p>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <!-- Navigation -->
+            <nav class="mt-6 px-4">
+                <a href="#"
+                    class="flex items-center px-4 py-3 mb-2 rounded-xl bg-gradient-to-r from-blue-500/80 to-blue-600/80 text-white transition-all duration-200 hover-glow">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    Dashboard
+                </a>
+
+                <a href="{{ route('admin.users') }}"
+                    class="flex items-center px-4 py-3 mb-2 rounded-xl text-slate-300 transition-all duration-200 hover:bg-white/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    Users
+                </a>
+
+                <a href="{{ route('kelas.index') }}"
+                    class="flex items-center px-4 py-3 mb-2 rounded-xl text-slate-300 transition-all duration-200 hover:bg-white/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                    Class
+                </a>
+
+                <a href="{{ route('index.history') }}"
+                    class="flex items-center px-4 py-3 mb-2 rounded-xl text-slate-300 transition-all duration-200 hover:bg-white/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Student Score History
+                </a>
+            </nav>
+
+            <!-- User Profile -->
+            <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10">
+                <div class="relative">
+                    <button id="avatarButton"
+                        class="w-full flex items-center gap-3 p-2 rounded-xl hover:bg-white/5 transition-colors">
+                        <div class="relative">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 p-[2px]">
+                                <img src="{{ asset('path-to-avatar.jpg') }}" alt="Avatar"
+                                    class="w-full h-full rounded-full object-cover">
+                            </div>
+                            <div
+                                class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-slate-900">
+                            </div>
+                        </div>
+                        <div class="flex-1 text-left">
+                            <h3 class="text-sm font-semibold">Admin Name</h3>
+                            <p class="text-xs text-slate-400">Super Admin</p>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 text-slate-400 transition-transform duration-200" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" id="chevronIcon">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+
+                    <!-- Dropdown Menu -->
+                    <div id="dropdownMenu" class="absolute bottom-full left-0 right-0 mb-2 hidden">
+                        <div
+                            class="glass-effect bg-slate-800/90 rounded-xl border border-white/10 shadow-lg overflow-hidden">
+                            <a href="#"
+                                class="flex items-center gap-2 px-4 py-3 text-sm hover:bg-white/10 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                                Profile
+                            </a>
+                            <a href="{{ route('logout') }}"
+                                class="flex items-center gap-2 px-4 py-3 text-sm text-red-400 hover:bg-white/10 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                </svg>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
 
         <!-- Main Content -->
-        <div class="flex-1 p-6 bg-white h-max">
-            @yield('contentAdmin')
-        </div>
+        <main class="flex-1 overflow-x-hidden">
+
+            <!-- Page Content -->
+            <div class="p-6">
+                @yield('contentAdmin')
+            </div>
+        </main>
     </div>
 
     <script>
@@ -118,10 +191,21 @@
             const chevronIcon = document.getElementById('chevronIcon');
 
             dropdownMenu.classList.toggle('hidden');
-            chevronIcon.classList.toggle('rotate-180'); // Rotate the chevron icon
+            chevronIcon.style.transform = dropdownMenu.classList.contains('hidden') ? 'rotate(0deg)' :
+                'rotate(180deg)';
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            const avatarButton = document.getElementById('avatarButton');
+
+            if (!avatarButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.add('hidden');
+                document.getElementById('chevronIcon').style.transform = 'rotate(0deg)';
+            }
         });
     </script>
-
 </body>
 
 </html>

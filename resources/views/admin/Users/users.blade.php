@@ -1,176 +1,218 @@
 @extends('layouts.main')
 
 @section('contentAdmin')
-    <div class="container mx-auto p-6 space-y-6">
-
-        <!-- Menampilkan pesan sukses -->
-        @if (session('success'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                <strong class="font-bold">Success!</strong>
-                <span class="block sm:inline">{{ session('success') }}</span>
-                <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                    <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20">
-                        <title>Close</title>
-                        <path
-                            d="M14.348 5.652a1 1 0 00-1.414 0L10 8.586 7.066 5.652a1 1 0 00-1.414 1.414L8.586 10l-2.934 2.934a1 1 0 101.414 1.414L10 11.414l2.934 2.934a1 1 0 001.414-1.414L11.414 10l2.934-2.934a1 1 0 000-1.414z" />
-                    </svg>
-                </span>
-            </div>
-        @endif
-
-        <!-- Menampilkan pesan error -->
-        @if (session('error'))
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                <strong class="font-bold">Error!</strong>
-                <span class="block sm:inline">{{ session('error') }}</span>
-                <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                    <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20">
-                        <title>Close</title>
-                        <path
-                            d="M14.348 5.652a1 1 0 00-1.414 0L10 8.586 7.066 5.652a1 1 0 00-1.414 1.414L8.586 10l-2.934 2.934a1 1 0 101.414 1.414L10 11.414l2.934-2.934a1 1 0 000-1.414z" />
-                    </svg>
-                </span>
-            </div>
-        @endif
-
-        <!-- Header dengan Logo Users -->
-        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                class="w-8 h-8 text-blue-500 mr-2">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M5.121 19.121A4.999 4.999 0 0112 17.5a4.999 4.999 0 016.879 1.621M12 14a5 5 0 110-10 5 5 0 010 10z" />
-            </svg>
-            <h1 class="text-2xl font-bold">User Management Dashboard</h1>
-        </div>
-
-        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 mb-6 flex gap-5">
-            <form action="{{ route('admin.users') }}" method="GET" class="w-4/5">
-                <div class="flex items-center">
-                    <input type="text" name="search" value="{{ request()->input('search') }}"
-                        class="border border-gray-300 rounded-lg px-4 py-2 mr-2 w-full bg-white"
-                        placeholder="Search by name or email">
-                    <button type="submit"
-                        class="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 hover:shadow-lg transition-all duration-300">
-                        Search
+    <div class="min-h-screen bg-slate-900 p-6">
+        <div class="container mx-auto space-y-6">
+            <!-- Alert Messages -->
+            @if (session('success'))
+                <div class="relative bg-emerald-900/50 text-emerald-200 px-6 py-4 rounded-lg border border-emerald-700/50 backdrop-blur-sm"
+                    role="alert" x-data="{ show: true }" x-show="show" x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="opacity-0 transform -translate-y-2"
+                    x-transition:enter-end="opacity-100 transform translate-y-0">
+                    <div class="flex items-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-400" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <div>
+                            <p class="font-medium">Success!</p>
+                            <p class="text-emerald-300">{{ session('success') }}</p>
+                        </div>
+                    </div>
+                    <button @click="show = false" class="absolute top-4 right-4 text-emerald-400 hover:text-emerald-300">
+                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd" />
+                        </svg>
                     </button>
                 </div>
-            </form>
-            <button
-                class="w-1/5 bg-blue-500 rounded-md text-white px-4 py-2 shadow hover:bg-blue-600 transition-all duration-300">
-                <a href="{{ route('users.create') }}">
+            @endif
+
+            @if (session('error'))
+                <div class="relative bg-red-900/50 text-red-200 px-6 py-4 rounded-lg border border-red-700/50 backdrop-blur-sm"
+                    role="alert" x-data="{ show: true }" x-show="show"
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="opacity-0 transform -translate-y-2"
+                    x-transition:enter-end="opacity-100 transform translate-y-0">
+                    <div class="flex items-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-400" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <div>
+                            <p class="font-medium">Error!</p>
+                            <p class="text-red-300">{{ session('error') }}</p>
+                        </div>
+                    </div>
+                    <button @click="show = false" class="absolute top-4 right-4 text-red-400 hover:text-red-300">
+                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+            @endif
+
+            <!-- Header -->
+            <div class="bg-slate-800/50 backdrop-blur-xl border border-slate-700 p-6 rounded-xl shadow-xl">
+                <div class="flex items-center gap-4">
+                    <div class="p-3 rounded-xl bg-cyan-900/50 border border-cyan-700/50 text-cyan-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                            <path
+                                d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h1
+                            class="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                            User Management Dashboard
+                        </h1>
+                        <p class="text-slate-400">Manage your system users and their roles</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search and Add User -->
+            <div class="flex flex-col md:flex-row gap-4">
+                <form action="{{ route('admin.users') }}" method="GET" class="flex-1">
+                    <div class="relative">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <input type="text" name="search" value="{{ request()->input('search') }}"
+                            class="w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-200 placeholder-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+                            placeholder="Search by name or email">
+                    </div>
+                </form>
+                <a href="{{ route('users.create') }}"
+                    class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-medium transition-all duration-200 group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 transition-transform group-hover:scale-110"
+                        viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                            clip-rule="evenodd" />
+                    </svg>
                     Add User
                 </a>
-            </button>
-        </div>
+            </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-            <h2 class="text-lg font-semibold mb-4">Users List</h2>
+            <!-- Users Table -->
+            <div class="bg-slate-800/50 backdrop-blur-xl border border-slate-700 rounded-xl shadow-xl overflow-hidden">
+                <div class="p-6 border-b border-slate-700">
+                    <h2 class="text-lg font-semibold text-white">Users List</h2>
+                </div>
 
-            <div class="overflow-x-auto">
-                <table class="min-w-full bg-white">
-                    <thead>
-                        <tr class="w-full bg-gray-200 text-left text-gray-600 uppercase text-sm leading-normal">
-                            <th class="py-3 px-6">Name</th>
-                            <th class="py-3 px-6">Email</th>
-                            <th class="py-3 px-6">Role</th>
-                            <th class="py-3 px-6">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-gray-600 text-sm font-light">
-                        @forelse ($users as $user)
-                            <tr class="border-b border-gray-200 hover:bg-gray-100">
-                                <td class="py-3 px-6">
-                                    <div class="flex items-center">
-                                        <div class="mr-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke="currentColor" class="w-6 h-6 text-blue-500">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M5.121 19.121A4.999 4.999 0 0112 17.5a4.999 4.999 0 016.879 1.621M12 14a5 5 0 110-10 5 5 0 010 10z" />
-                                            </svg>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-slate-700/50 text-slate-300 text-sm">
+                                <th class="py-3 px-6 text-left">Name</th>
+                                <th class="py-3 px-6 text-left">Email</th>
+                                <th class="py-3 px-6 text-left">Role</th>
+                                <th class="py-3 px-6 text-left">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700">
+                            @forelse ($users as $user)
+                                <tr class="text-slate-300 hover:bg-slate-700/50 transition-colors duration-200">
+                                    <td class="py-3 px-6">
+                                        <div class="flex items-center gap-3">
+                                            <div
+                                                class="flex-shrink-0 h-10 w-10 rounded-full bg-slate-700 border border-slate-600 flex items-center justify-center">
+                                                <span class="text-sm font-medium text-slate-300">
+                                                    {{ substr($user->name, 0, 2) }}
+                                                </span>
+                                            </div>
+                                            <span class="font-medium">{{ $user->name }}</span>
                                         </div>
-                                        <span>{{ $user->name }}</span>
-                                    </div>
-                                </td>
-                                <td class="py-3 px-6">{{ $user->email }}</td>
-                                <td class="py-3 px-6">{{ $user->role }}</td>
-                                <td class="py-3 px-6">
-                                    <div class="flex item-center justify-start">
-                                        <a href="{{ route('users.edit', $user->id) }}"
-                                            class="w-4 mr-2 transform text-green-500 hover:text-green-600 hover:scale-110">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke="currentColor" class="w-6 h-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M12 20h9m-9-4h9m-9-4h9M5 12h.01M7 16h.01" />
-                                            </svg>
-                                        </a>
-
-                                        <form action="{{ route('users.destroy', $user->id) }}" method="POST"
-                                            onsubmit="return confirm('Are you sure you want to delete this user?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="w-4 mr-2 transform text-red-500 hover:text-red-600 hover:scale-110">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                    stroke="currentColor" class="w-6 h-6">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M6 18L18 6M6 6l12 12" />
+                                    </td>
+                                    <td class="py-3 px-6">{{ $user->email }}</td>
+                                    <td class="py-3 px-6">
+                                        <span
+                                            class="px-2 py-1 rounded-full text-sm 
+                                        {{ $user->role === 'admin'
+                                            ? 'bg-purple-900/50 text-purple-300 border border-purple-700/50'
+                                            : 'bg-slate-700/50 text-slate-300 border border-slate-600' }}">
+                                            {{ $user->role }}
+                                        </span>
+                                    </td>
+                                    <td class="py-3 px-6">
+                                        <div class="flex items-center gap-3">
+                                            <a href="{{ route('users.edit', $user->id) }}"
+                                                class="inline-flex items-center text-emerald-400 hover:text-emerald-300 transition-colors">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1"
+                                                    viewBox="0 0 20 20" fill="currentColor">
+                                                    <path
+                                                        d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                                                    <path fill-rule="evenodd"
+                                                        d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                                                        clip-rule="evenodd" />
                                                 </svg>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="4" class="text-center py-3">No users found.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                                                Edit
+                                            </a>
+                                            <form action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                                class="inline-flex"
+                                                onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="inline-flex items-center text-red-400 hover:text-red-300 transition-colors">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1"
+                                                        viewBox="0 0 20 20" fill="currentColor">
+                                                        <path fill-rule="evenodd"
+                                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="py-8 text-center text-slate-400">
+                                        <div class="flex flex-col items-center justify-center space-y-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12  text-slate-500"
+                                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                            </svg>
+                                            <p>No users found.</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
 
-                <div class="mt-4">
+                <!-- Pagination -->
+                <div class="p-4 border-t border-slate-700">
                     {{ $users->appends(['search' => request()->input('search')])->links() }}
                 </div>
             </div>
         </div>
-
-        <div id="addUserModal" class="fixed z-10 inset-0 hidden overflow-y-auto">
-            <div class="flex items-center justify-center min-h-screen">
-                <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
-                    <h2 class="text-xl font-semibold mb-4">Add New User</h2>
-                    <form action="{{ route('users.store') }}" method="POST">
-                        @csrf
-                        <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                            <input type="text" name="name" id="name"
-                                class="border border-gray-300 rounded-lg px-4 py-2 mt-1 w-full">
-                        </div>
-                        <div class="mb-4">
-                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                            <input type="email" name="email" id="email"
-                                class="border border-gray-300 rounded-lg px-4 py-2 mt-1 w-full">
-                        </div>
-                        <div class="mb-4">
-                            <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
-                            <select name="role" id="role"
-                                class="border border-gray-300 rounded-lg px-4 py-2 mt-1 w-full">
-                                <option value="admin">Admin</option>
-                                <option value="user">User</option>
-                            </select>
-                        </div>
-                        <div class="flex justify-end">
-                            <button type="button"
-                                onclick="document.getElementById('addUserModal').classList.add('hidden')"
-                                class="bg-gray-500 text-white px-4 py-2 rounded-md mr-2">Cancel</button>
-                            <button type="submit"
-                                class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Add User</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
     </div>
+
+    <script>
+        // Close alerts after 5 seconds
+        setTimeout(() => {
+            const alerts = document.querySelectorAll('[role="alert"]');
+            alerts.forEach(alert => {
+                alert.style.opacity = '0';
+                alert.style.transform = 'translateY(-1rem)';
+                setTimeout(() => alert.remove(), 300);
+            });
+        }, 5000);
+    </script>
 @endsection

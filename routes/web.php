@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\historyController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\NilaiController;
@@ -55,7 +56,7 @@ Route::middleware('auth')->group(function () {
     });
     Route::get('/etdah', function () {
         return view('admin.dashboard');
-    });
+    })->name('admin.dashboard');
 
     Route::middleware('checkRole:guru')->group(function () {
         Route::post('/nilai/import/', [NilaiController::class, 'import'])->name('nilai.import');
@@ -94,6 +95,10 @@ Route::middleware('checkRole:admin')->group(function () {
 
     Route::put('admin/users/update/{id}', [AdminController::class, 'update'])->name('users.update');
     Route::delete('admin/users/delete/{id}', [AdminController::class, 'deleteUsers'])->name('users.destroy');
+
+    Route::get('admin/history', [historyController::class, 'index'])->name('index.history');
+    Route::post('/revert-change/{id}', [HistoryController::class, 'revertChange'])->name('revert.change');
+
 });
 
 Route::fallback(function () {

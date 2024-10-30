@@ -413,14 +413,19 @@ class NilaiController extends Controller
         $nilai = NilaiSiswa::findOrFail($id);
         $oldNilai = $nilai->nilai;
         $nilai->nilai = $request->input('nilai');
-        // $nilai->keterangan = $request->input('keterangan');
         $nilai->save();
+        // $nilai->keterangan = $request->input('keterangan');
+
         NilaiHistory::create([
             'nilai_siswa_id' => $nilai->id,
-            'user_id' => auth()->id(),
+            'user_id' => auth()->id(), // Admin atau user yang membuat/mengupdate
+            'updated_by' => auth()->id(), // Menyimpan siapa yang mengubah nilai
             'nilai_before' => $oldNilai,
             'nilai_after' => $request->nilai,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
+
 
         return redirect()->route('guru.tampilkan_nilai', $nilai->nis_siswa)->with('success', 'Nilai berhasil diperbarui');
     }

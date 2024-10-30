@@ -42,6 +42,8 @@ class AuthController extends Controller
                 return redirect()->route('guru.index');
             } elseif ($user->role == 'siswa') {
                 return redirect()->route('dashboard');
+            } elseif ($user->role == 'admin') {
+                return redirect()->route('admin.dashboard');
             }
         } else {
             // Jika otentikasi gagal
