@@ -1,13 +1,16 @@
 <?php
+
 namespace App\Imports;
 
 use App\Models\Nilai;
 use App\Models\Siswa;
 use App\Models\Mapel;
 use App\Models\NilaiSiswa;
+use App\Models\NilaiHistory; // Import model NilaiHistory
 use App\Models\TahunAjaran;
 use Maatwebsite\Excel\Concerns\ToArray;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class NilaiImport implements ToArray
 {
@@ -50,19 +53,15 @@ class NilaiImport implements ToArray
                 ->first();
 
             $mapel = Mapel::where('id', $this->data['mapel'])->first();
-            // if (!$mapel) {
-            //     $mapel = Mapel::where('id', $existingNilai->mapel)->first();
-            // }
-            // dd($this->data['mapel']);
-            // die();
 
             if ($existingNilai) {
                 $name = Nilai::where('id', $existingNilai->nilai_id)->first();
-                throw new Exception('Nilai "' . $name['name'] . 'untuk mapel' . $mapel['nama'] . '" dari murid dengan NIS ' . $siswa->nis . ' telah terisi. Jika ingin mengubah atau menghapus nilai, silahkan beralih ke fitur perbaikan nilai.');
+                throw new Exception('Nilai "' . $name['name'] . ' untuk mapel ' . $mapel['nama'] . '" dari murid dengan NIS ' . $siswa->nis . ' telah terisi. Jika ingin mengubah atau menghapus nilai, silahkan beralih ke fitur perbaikan nilai.');
             }
 
             if (($this->data['nilai'])) {
-                NilaiSiswa::create([
+                // Simpan Nilai Baru
+                $newNilai = NilaiSiswa::create([
                     'nilai_id' => $this->data['nilai'],
                     'keterangan' => $row[1],
                     'tingkat' => $this->data['tingkat'],
@@ -72,10 +71,20 @@ class NilaiImport implements ToArray
                     'tahun_ajaran_id' => $tahunAjaran->id,
                     'nis_siswa' => $siswa->nis,
                 ]);
+
+                // Catat History Nilai
+                NilaiHistory::create([
+                    'nilai_siswa_id' => $newNilai->id,
+                    'user_id' => Auth::id(),
+                    'updated_by' => null,
+                    'nilai_before' => null, // Ini karena ini nilai baru
+                    'nilai_after' => $row[2], // Nilai yang diimpor
+                    'created_at' => now(),
+                    'updated_at' => null,
+                ]);
             } else {
                 throw new Exception('Nilai type tidak valid: ' . $this->data['nilai']);
             }
         }
     }
-
 }

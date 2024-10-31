@@ -64,9 +64,10 @@
                         <div
                             class="absolute inset-0 bg-gradient-to-tr from-blue-500 to-purple-500 rounded-xl animate-gradient">
                         </div>
-                        {{-- <div class="absolute inset-[2px] bg-slate-900 rounded-lg flex items-center justify-center">
-                            <img src="{{ asset('png') }}" alt="Admin Logo" class="w-8 h-8">
-                        </div> --}}
+                        <div class="absolute inset-[2px] bg-white rounded-lg flex items-center justify-center">
+                            <img src="https://tse2.mm.bing.net/th?id=OIP.jBwefGdT24xikvtdnbmxkQHaHZ&pid=Api&P=0&h=180"
+                                alt="Admin Logo" class="w-8 h-8">
+                        </div>
                     </div>
                     <div>
                         <h1
@@ -80,8 +81,8 @@
 
             <!-- Navigation -->
             <nav class="mt-6 px-4">
-                <a href="#"
-                    class="flex items-center px-4 py-3 mb-2 rounded-xl bg-gradient-to-r from-blue-500/80 to-blue-600/80 text-white transition-all duration-200 hover-glow">
+                <a href="{{ route('admin.dashboard') }}"
+                    class="flex items-center px-4 py-3 mb-2 rounded-xl  text-white transition-all duration-200 hover-glow">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -119,6 +120,15 @@
                     </svg>
                     Student Score History
                 </a>
+                <a href="{{ route('index.history') }}"
+                    class="flex items-center px-4 py-3 mb-2 rounded-xl text-slate-300 transition-all duration-200 hover:bg-white/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    Student and Teacher
+                </a>
             </nav>
 
             <!-- User Profile -->
@@ -150,7 +160,7 @@
                     <div id="dropdownMenu" class="absolute bottom-full left-0 right-0 mb-2 hidden">
                         <div
                             class="glass-effect bg-slate-800/90 rounded-xl border border-white/10 shadow-lg overflow-hidden">
-                            <a href="#"
+                            {{-- <a href="#"
                                 class="flex items-center gap-2 px-4 py-3 text-sm hover:bg-white/10 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
@@ -158,7 +168,7 @@
                                         d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
                                 Profile
-                            </a>
+                            </a> --}}
                             <a href="{{ route('logout') }}"
                                 class="flex items-center gap-2 px-4 py-3 text-sm text-red-400 hover:bg-white/10 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"

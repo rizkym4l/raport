@@ -383,6 +383,8 @@ class NilaiController extends Controller
 
         try {
             Excel::import(new NilaiImport($data), $request->file('file'));
+
+
             return redirect()->back()->with('success', 'Data berhasil diimpor!');
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
@@ -415,14 +417,14 @@ class NilaiController extends Controller
         $nilai->nilai = $request->input('nilai');
         $nilai->save();
         // $nilai->keterangan = $request->input('keterangan');
-
+        $created = NilaiHistory::where('nilai_siswa_id', $nilai->id)->firstOr();
         NilaiHistory::create([
             'nilai_siswa_id' => $nilai->id,
-            'user_id' => auth()->id(), // Admin atau user yang membuat/mengupdate
-            'updated_by' => auth()->id(), // Menyimpan siapa yang mengubah nilai
+            'user_id' => Auth::user()->id,
+            'updated_by' => null,
             'nilai_before' => $oldNilai,
             'nilai_after' => $request->nilai,
-            'created_at' => now(),
+            'created_at' => $created->created_at,
             'updated_at' => now(),
         ]);
 

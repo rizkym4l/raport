@@ -39,8 +39,10 @@ class KelasController extends Controller
         return redirect()->route('kelas.index')->with('success', 'Kelas berhasil ditambahkan');
     }
 
-    public function edit(Kelas $kelas)
+    public function edit($kelas)
     {
+        // dd($kelas);
+        $kelas = Kelas::find($kelas);
         return view('admin.kelas.edit', compact('kelas'));
     }
     public function search(Request $request)
@@ -54,20 +56,27 @@ class KelasController extends Controller
     }
 
 
-    public function update(Request $request, Kelas $kelas)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'nama_kelas' => 'required|string|max:255',
             'tingkat' => 'required|integer',
         ]);
 
-        $kelas->update($request->all());
+        $kelas = Kelas::findOrFail($id);
 
+        $kelas->update([
+            'nama_kelas' => $request->input('nama_kelas'),
+            'tingkat' => $request->input('tingkat'),
+        ]);
+        // Redirect ke halaman index dengan pesan sukses
         return redirect()->route('kelas.index')->with('success', 'Kelas berhasil diupdate');
     }
 
-    public function destroy(Kelas $kelas)
+
+    public function destroy($kelas)
     {
+        $kelas = Kelas::find($kelas);
         $kelas->delete();
 
         return redirect()->route('kelas.index')->with('success', 'Kelas berhasil dihapus');

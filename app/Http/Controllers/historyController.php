@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\NilaiHistory;
+use Carbon\Carbon;
 use App\Models\NilaiSiswa;
+use App\Models\NilaiHistory;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Spatie\FlareClient\Http\Response;
 
 class historyController extends Controller
 {
@@ -18,6 +21,37 @@ class historyController extends Controller
         $nilaiSiswa->save();
 
         return response()->json(['success' => true]);
+    }
+
+
+    public function downloadReport(Request $request)
+    {
+        $year = $request->query('year');
+        $month = $request->query('month');
+
+        // Mengambil data dari NilaiHistory yang created_at-nya sesuai dengan tahun dan bulan yang dipilih
+        $reportData = NilaiHistory::with([
+            'nilaiSiswa.mapel',           // Relasi ke mata pelajaran
+            'nilaiSiswa.tahunAjaran',     // Relasi ke tahun ajaran
+            'siswa',
+            'user'                        // Relasi ke user yang mengubah data
+        ])
+            ->whereYear('created_at', $year)
+            ->whereMonth('created_at', $month)
+            ->get();
+
+        // dd($reportData[0]);
+
+        $pdf = PDF::loadView('admin.history.monthly_report', [
+            'reportData' => $reportData,
+            'year' => $year,
+            'month' => Carbon::create()->month($month)->format('F')
+        ]);
+
+        $fileName = "Report_{$year}_{$month}.pdf";
+
+        // Return PDF sebagai download response
+        return $pdf->download($fileName);
     }
 
     public function index(Request $request)
@@ -47,7 +81,6 @@ class historyController extends Controller
 
         // dd($history);
 
-        // Return ke view dengan data yang sudah difilter
         return view('admin.history.index', compact('history'));
     }
 

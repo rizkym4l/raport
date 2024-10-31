@@ -28,7 +28,9 @@
                         </div>
                         <div class="ml-4">
                             <p class="text-sm text-slate-400">Total Teachers</p>
-                            <h2 class="text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors">45</h2>
+                            <h2 class="text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors">
+                                {{ $totalGuru }}
+                            </h2>
                         </div>
                     </div>
                 </div>
@@ -46,7 +48,8 @@
                         </div>
                         <div class="ml-4">
                             <p class="text-sm text-slate-400">Total Students</p>
-                            <h2 class="text-2xl font-bold text-white group-hover:text-emerald-400 transition-colors">500
+                            <h2 class="text-2xl font-bold text-white group-hover:text-emerald-400 transition-colors">
+                                {{ $totalSiswa }}
                             </h2>
                         </div>
                     </div>
@@ -65,12 +68,14 @@
                         </div>
                         <div class="ml-4">
                             <p class="text-sm text-slate-400">Total Users</p>
-                            <h2 class="text-2xl font-bold text-white group-hover:text-amber-400 transition-colors">150</h2>
+                            <h2 class="text-2xl font-bold text-white group-hover:text-amber-400 transition-colors">
+                                {{ $totalUser }}
+                            </h2>
                         </div>
                     </div>
                 </div>
 
-                <!-- New Registrations Card -->
+                <!-- History Card -->
                 <div
                     class="group bg-slate-800/50 backdrop-blur-xl border border-slate-700 p-6 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300">
                     <div class="flex items-center">
@@ -82,103 +87,86 @@
                             </svg>
                         </div>
                         <div class="ml-4">
-                            <p class="text-sm text-slate-400">New Registrations</p>
-                            <h2 class="text-2xl font-bold text-white group-hover:text-purple-400 transition-colors">30</h2>
+                            <p class="text-sm text-slate-400">Total History</p>
+                            <h2 class="text-2xl font-bold text-white group-hover:text-purple-400 transition-colors">
+                                {{ $totalHistory }}
+                            </h2>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Recent Activities & Announcements Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Recent Activities -->
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- User Growth Chart -->
                 <div class="bg-slate-800/50 backdrop-blur-xl border border-slate-700 p-6 rounded-xl shadow-xl">
-                    <h2 class="text-xl font-semibold text-white mb-4 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-cyan-400" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        Recent Activities
-                    </h2>
-                    <div class="space-y-4">
-                        <div class="flex items-center p-3 rounded-lg bg-slate-700/50 border border-slate-600">
-                            <div
-                                class="flex-shrink-0 h-10 w-10 rounded-full bg-cyan-900/50 border border-cyan-700/50 flex items-center justify-center text-cyan-400">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <p class="text-sm font-medium text-white">Added new teacher: John Doe</p>
-                                <p class="text-sm text-slate-400">2 minutes ago</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center p-3 rounded-lg bg-slate-700/50 border border-slate-600">
-                            <div
-                                class="flex-shrink-0 h-10 w-10 rounded-full bg-emerald-900/50 border border-emerald-700/50 flex items-center justify-center text-emerald-400">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <p class="text-sm font-medium text-white">Student A got top scores in Math</p>
-                                <p class="text-sm text-slate-400">1 hour ago</p>
-                            </div>
-                        </div>
-                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-4">User Growth</h3>
+                    <canvas id="userGrowthChart" width="400" height="200"></canvas>
                 </div>
 
-                <!-- Announcements -->
+                <!-- Activity Distribution Chart -->
                 <div class="bg-slate-800/50 backdrop-blur-xl border border-slate-700 p-6 rounded-xl shadow-xl">
-                    <h2 class="text-xl font-semibold text-white mb-4 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-amber-400" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
-                        </svg>
-                        Announcements
-                    </h2>
-                    <div class="p-4 rounded-lg bg-amber-900/10 border border-amber-700/50">
-                        <p class="text-amber-100">
-                            Don't forget to update the student list for the new semester by the end of this month.
-                        </p>
-                        <div class="mt-3 flex items-center text-sm text-amber-400">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            Deadline: 30 days remaining
-                        </div>
-                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-4">Activity Distribution</h3>
+                    <canvas id="activityDistributionChart" width="400" height="200"></canvas>
                 </div>
             </div>
         </div>
     </div>
 
-    <style>
-        /* Custom animations */
-        @keyframes float {
-            0% {
-                transform: translateY(0px);
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // User Growth Chart (using sample data - update as necessary)
+        var userGrowthCtx = document.getElementById('userGrowthChart').getContext('2d');
+        var userGrowthChart = new Chart(userGrowthCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'User Growth',
+                    data: [{{ $totalGuru }}, {{ $totalSiswa }}, {{ $totalUser }},
+                        {{ $totalHistory }}
+                    ], // Use real data or update monthly data
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
             }
+        });
 
-            50% {
-                transform: translateY(-5px);
+        // Activity Distribution Chart
+        var activityDistributionCtx = document.getElementById('activityDistributionChart').getContext('2d');
+        var activityDistributionChart = new Chart(activityDistributionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Teachers', 'Students', 'Users'],
+                datasets: [{
+                    data: [{{ $totalGuru }}, {{ $totalSiswa }}, {{ $totalUser }}],
+                    backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 205, 86)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Activity Distribution'
+                    }
+                }
             }
-
-            100% {
-                transform: translateY(0px);
-            }
-        }
-
-        .group:hover {
-            animation: float 2s ease-in-out infinite;
-        }
-    </style>
+        });
+    </script>
 @endsection

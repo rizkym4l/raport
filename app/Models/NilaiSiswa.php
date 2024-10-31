@@ -24,6 +24,7 @@ class NilaiSiswa extends Model
         'mapel_id',
         'tahun_ajaran_id',
         'nis_siswa',
+        'created_by'
     ];
 
     public function nilaiNama()

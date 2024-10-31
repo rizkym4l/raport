@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Guru;
+use App\Models\User;
 use App\Models\Siswa;
 use App\Models\NilaiHistory;
 use Illuminate\Support\Facades\Auth;
@@ -7,10 +9,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\historyController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\NilaiController;
+use App\Http\Controllers\historyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TingkatanController;
 
@@ -55,7 +57,17 @@ Route::middleware('auth')->group(function () {
 
     });
     Route::get('/etdah', function () {
-        return view('admin.dashboard');
+        $totalGuru = Guru::count();
+        $totalSiswa = Siswa::count();
+        $totalUser = User::count();
+        $totalHistory = NilaiHistory::count();
+
+        return view('admin.dashboard', [
+            'totalGuru' => $totalGuru,
+            'totalSiswa' => $totalSiswa,
+            'totalUser' => $totalUser,
+            'totalHistory' => $totalHistory,
+        ]);
     })->name('admin.dashboard');
 
     Route::middleware('checkRole:guru')->group(function () {
@@ -91,13 +103,15 @@ Route::middleware('checkRole:admin')->group(function () {
     Route::get('kelas/edit/{id}', [KelasController::class, 'edit'])->name('kelas.edit');
     Route::post('kelas/store', [KelasController::class, 'store'])->name('kelas.store');
     Route::delete('kelas/destroy/{id}', [KelasController::class, 'destroy'])->name('kelas.destroy');
-    Route::put('kelas/update', [KelasController::class, 'update'])->name('kelas.update');
+    Route::put('kelas/update/{id}', [KelasController::class, 'update'])->name('kelas.update');
 
     Route::put('admin/users/update/{id}', [AdminController::class, 'update'])->name('users.update');
     Route::delete('admin/users/delete/{id}', [AdminController::class, 'deleteUsers'])->name('users.destroy');
 
     Route::get('admin/history', [historyController::class, 'index'])->name('index.history');
-    Route::post('/revert-change/{id}', [HistoryController::class, 'revertChange'])->name('revert.change');
+    Route::post('/revert-change/{id}', [historyController::class, 'revertChange'])->name('revert.change');
+    Route::get('/download-report', [historyController::class, 'downloadReport'])->name('download.report');
+
 
 });
 
